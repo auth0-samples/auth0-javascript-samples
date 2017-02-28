@@ -1,6 +1,31 @@
-# Auth0 JavaScript Samples
+# Auth0 JavaScript Custom Login Form
 
-These samples demonstrate how to add authentication to a JavaScript application with Auth0. Each folder contains a distinct application so that various Auth0 features can be viewed in isolation.
+This sample demonstrates how to add authentication with a custom login form to a JavaScript application using Auth0.
+
+## Getting Started
+
+If you haven't already done so, [sign up](https://auth0.com) for your free Auth0 account and create a new client in the [dashboard](https://manage.auth0.com). Find the **domain** and **client ID** from the settings area and add the URL for your application to the **Allowed Callback URLs** box. If you are serving the application with the provided `serve` library, that URL is `http://localhost:3000`.
+
+Clone the repo or download it from the JavaScript quickstart page in Auth0's documentation.
+
+```bash
+cd 02-Custom-Login-Form
+npm install
+```
+
+## Set the Client ID and Domain
+
+If you download the sample from the quickstart page, it will come pre-populated with the **client ID** and **domain** for your application. If you clone the repo directly from Github, rename the `auth0-variables.js.example` file to `auth0-variables.js` and provide the **client ID** and **domain** there.
+
+## Run the Application
+
+The `serve` module provided with this sample can be run with the `start` command.
+
+```bash
+npm start
+```
+
+The application will be served at `http://localhost:3000`.
 
 ## What is Auth0?
 
@@ -29,3 +54,6 @@ If you have found a bug or if you have a feature request, please report them at 
 ## License
 
 This project is licensed under the MIT license. See the [LICENSE](LICENSE.txt) file for more info.
+
+
+

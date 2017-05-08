@@ -1,16 +1,16 @@
 window.addEventListener('load', function() {
-
   var content = document.querySelector('.content');
   var loadingSpinner = document.getElementById('loading');
   content.style.display = 'block';
   loadingSpinner.style.display = 'none';
-  
+
   var webAuth = new auth0.WebAuth({
     domain: AUTH0_DOMAIN,
     clientID: AUTH0_CLIENT_ID,
     redirectUri: AUTH0_CALLBACK_URL,
     audience: 'https://' + AUTH0_DOMAIN + '/userinfo',
-    responseType: 'token id_token'
+    responseType: 'token id_token',
+    scope: 'openid'
   });
 
   var loginStatus = document.querySelector('.container h4');
@@ -65,6 +65,9 @@ window.addEventListener('load', function() {
       function(err, data) {
         if (err) {
           console.log(err);
+          alert(
+            'Error: ' + err.description + '. Check the console for further details.'
+          );
           return;
         }
         setSession(data);
@@ -86,22 +89,19 @@ window.addEventListener('load', function() {
       function(err) {
         if (err) {
           console.log(err);
+          alert(
+            'Error: ' + err.description + '. Check the console for further details.'
+          );
+          return;
         }
       }
     );
   }
 
   function loginWithGoogle() {
-    webAuth.authorize(
-      {
-        connection: 'google-oauth2'
-      },
-      function(err) {
-        if (err) {
-          console.log('Error:' + err);
-        }
-      }
-    );
+    webAuth.authorize({
+      connection: 'google-oauth2'
+    });
   }
 
   function setSession(authResult) {
@@ -137,7 +137,8 @@ window.addEventListener('load', function() {
     } else {
       loginViewBtn.style.display = 'inline-block';
       logoutBtn.style.display = 'none';
-      loginStatus.innerHTML = 'You are not logged in! Please log in to continue.';
+      loginStatus.innerHTML =
+        'You are not logged in! Please log in to continue.';
     }
   }
 
@@ -150,7 +151,10 @@ window.addEventListener('load', function() {
         loginView.style.display = 'none';
         homeView.style.display = 'inline-block';
       } else if (err) {
-        alert('Error: ' + err.error);
+        console.log(err);
+        alert(
+          'Error: ' + err.error + '. Check the console for further details.'
+        );
       }
       displayButtons();
     });

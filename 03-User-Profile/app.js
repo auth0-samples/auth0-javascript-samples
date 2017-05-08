@@ -1,34 +1,21 @@
 window.addEventListener('load', function() {
-
+  var userProfile;
   var content = document.querySelector('.content');
   var loadingSpinner = document.getElementById('loading');
   content.style.display = 'block';
   loadingSpinner.style.display = 'none';
 
-  var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, {
-    oidcConformant: true,
-    autoclose: true,
-    auth: {
-      redirectUrl: AUTH0_CALLBACK_URL,
-      responseType: 'token id_token',
-      audience: 'https://' + AUTH0_DOMAIN + '/userinfo',
-      params: {
-        scope: 'openid profile'
-      }
-    }
+  var webAuth = new auth0.WebAuth({
+    domain: AUTH0_DOMAIN,
+    clientID: AUTH0_CLIENT_ID,
+    redirectUri: AUTH0_CALLBACK_URL,
+    audience: 'https://' + AUTH0_DOMAIN + '/userinfo',
+    responseType: 'token id_token',
+    scope: 'openid profile'
   });
 
-  var userProfile;
-
-  lock.on('authenticated', function(authResult) {
-    if (authResult && authResult.accessToken && authResult.idToken) {
-      setSession(authResult);
-    } else if (authResult && authResult.error) {
-      alert('Error: ' + authResult.error);
-    }
-    displayButtons();
-  });
-
+  var loginStatus = document.querySelector('.container h4');
+  var loginView = document.getElementById('login-view');
   var homeView = document.getElementById('home-view');
   var profileView = document.getElementById('profile-view');
 
@@ -38,9 +25,6 @@ window.addEventListener('load', function() {
 
   var homeViewBtn = document.getElementById('btn-home-view');
   var profileViewBtn = document.getElementById('btn-profile-view');
-
-  loginBtn.addEventListener('click', login);
-  logoutBtn.addEventListener('click', logout);
 
   homeViewBtn.addEventListener('click', function() {
     homeView.style.display = 'inline-block';
@@ -53,9 +37,12 @@ window.addEventListener('load', function() {
     getProfile();
   });
 
-  function login() {
-    lock.show();
-  }
+  loginBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    webAuth.authorize();
+  });
+
+  logoutBtn.addEventListener('click', logout);
 
   function setSession(authResult) {
     // Set the time that the access token will expire at
@@ -88,14 +75,16 @@ window.addEventListener('load', function() {
       loginBtn.style.display = 'none';
       logoutBtn.style.display = 'inline-block';
       profileViewBtn.style.display = 'inline-block';
-      loginStatus.innerHTML = 'You are logged in! You can now view your profile area.';
+      loginStatus.innerHTML =
+        'You are logged in! You can now view your profile area.';
     } else {
       homeView.style.display = 'inline-block';
       loginBtn.style.display = 'inline-block';
       logoutBtn.style.display = 'none';
       profileViewBtn.style.display = 'none';
       profileView.style.display = 'none';
-      loginStatus.innerHTML = 'You are not logged in! Please log in to continue.';
+      loginStatus.innerHTML =
+        'You are not logged in! Please log in to continue.';
     }
   }
 
@@ -107,7 +96,7 @@ window.addEventListener('load', function() {
         console.log('Access token must exist to fetch profile');
       }
 
-      lock.getUserInfo(accessToken, function(err, profile) {
+      webAuth.client.userInfo(accessToken, function(err, profile) {
         if (profile) {
           userProfile = profile;
           displayProfile();
@@ -120,14 +109,31 @@ window.addEventListener('load', function() {
 
   function displayProfile() {
     // display the profile
-    document.querySelector(
-      '#profile-view .nickname'
-    ).innerHTML = userProfile.nickname;
+    document.querySelector('#profile-view .nickname').innerHTML =
+      userProfile.nickname;
     document.querySelector(
       '#profile-view .full-profile'
     ).innerHTML = JSON.stringify(userProfile, null, 2);
     document.querySelector('#profile-view img').src = userProfile.picture;
   }
 
-  displayButtons();
+  function handleAuthentication() {
+    webAuth.parseHash(function(err, authResult) {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        window.location.hash = '';
+        setSession(authResult);
+        loginBtn.style.display = 'none';
+        homeView.style.display = 'inline-block';
+      } else if (err) {
+        homeView.style.display = 'inline-block';
+        console.log(err);
+        alert(
+          'Error: ' + err.error + '. Check the console for further details.'
+        );
+      }
+      displayButtons();
+    });
+  }
+
+  handleAuthentication();
 });

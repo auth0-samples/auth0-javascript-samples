@@ -1,6 +1,6 @@
-# Auth0 JavaScript Basic Login
+# Auth0 JavaScript Embedded Login
 
-This sample demonstrates how to add authentication to a  application using Auth0's Lock widget.
+This sample demonstrates how to add authentication to a JavaScript application using Auth0's Lock widget.
 
 ## Getting Started
 
@@ -9,7 +9,7 @@ If you haven't already done so, [sign up](https://auth0.com) for your free Auth0
 Clone the repo or download it from the JavaScript quickstart page in Auth0's documentation.
 
 ```bash
-cd 01-Basic-Login
+cd 01-Embedded-Login
 npm install
 ```
 
@@ -25,7 +25,7 @@ The `serve` module provided with this sample can be run with the `start` command
 npm start
 ```
 
-The application will be served at `http://localhost:3000`.
+The application will be served at `http://localhost:5000`.
 
 ## What is Auth0?
 

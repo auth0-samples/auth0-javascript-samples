@@ -1,26 +1,32 @@
 window.addEventListener('load', function() {
-
   var content = document.querySelector('.content');
   var loadingSpinner = document.getElementById('loading');
   content.style.display = 'block';
   loadingSpinner.style.display = 'none';
-  
+
   var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, {
     oidcConformant: true,
     autoclose: true,
     auth: {
       redirectUrl: AUTH0_CALLBACK_URL,
       responseType: 'token id_token',
-      audience: 'https://' + AUTH0_DOMAIN + '/userinfo'
+      audience: 'https://' + AUTH0_DOMAIN + '/userinfo',
+      params: {
+        scope: 'openid'
+      }
     }
   });
 
   lock.on('authenticated', function(authResult) {
     if (authResult && authResult.accessToken && authResult.idToken) {
       setSession(authResult);
-    } else if (authResult && authResult.error) {
-      alert('Error: ' + authResult.error);
     }
+    displayButtons();
+  });
+
+  lock.on('authorization_error', function(err) {
+    console.log(err);
+    alert('Error: ' + err.error + '. Check the console for further details.');
     displayButtons();
   });
 
@@ -69,7 +75,8 @@ window.addEventListener('load', function() {
     } else {
       loginBtn.style.display = 'inline-block';
       logoutBtn.style.display = 'none';
-      loginStatus.innerHTML = 'You are not logged in! Please log in to continue.';
+      loginStatus.innerHTML =
+        'You are not logged in! Please log in to continue.';
     }
   }
 

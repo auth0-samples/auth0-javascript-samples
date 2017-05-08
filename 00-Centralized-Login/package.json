@@ -10,7 +10,9 @@
   "license": "MIT",
   "dependencies": {
     "auth0-js": "^8.6.0",
-    "bootstrap": "^3.3.7",
-    "serve": "^3.4.1"
+    "bootstrap": "^3.3.7"
+  },
+  "devDependencies": {
+    "serve": "^5.1.5"
   }
 }

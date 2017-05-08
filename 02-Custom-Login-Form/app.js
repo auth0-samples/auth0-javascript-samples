@@ -10,7 +10,8 @@ window.addEventListener('load', function() {
     clientID: AUTH0_CLIENT_ID,
     redirectUri: AUTH0_CALLBACK_URL,
     audience: 'https://' + AUTH0_DOMAIN + '/userinfo',
-    responseType: 'token id_token'
+    responseType: 'token id_token',
+    leeway: 5
   });
 
   var loginStatus = document.querySelector('.container h4');

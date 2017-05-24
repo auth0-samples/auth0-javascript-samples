@@ -8,26 +8,13 @@ window.addEventListener('load', function() {
   var userProfile;
   var apiUrl = 'http://localhost:3001/api';
 
-  var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, {
-    oidcConformant: true,
-    autoclose: true,
-    auth: {
-      redirectUrl: AUTH0_CALLBACK_URL,
-      responseType: 'token id_token',
-      audience: API_ID,
-      params: {
-        scope: 'openid profile'
-      }
-    }
-  });
-
-  lock.on('authenticated', function(authResult) {
-    if (authResult && authResult.accessToken && authResult.idToken) {
-      setSession(authResult);
-    } else if (authResult && authResult.error) {
-      alert('Error: ' + authResult.error);
-    }
-    displayButtons();
+  var webAuth = new auth0.WebAuth({
+    domain: AUTH0_DOMAIN,
+    clientID: AUTH0_CLIENT_ID,
+    redirectUri: AUTH0_CALLBACK_URL,
+    audience: API_ID,
+    responseType: 'token id_token',
+    scope: 'openid profile read:messages'
   });
 
   var homeView = document.getElementById('home-view');
@@ -79,7 +66,7 @@ window.addEventListener('load', function() {
   });
 
   function login() {
-    lock.show();
+    webAuth.authorize();
   }
 
   function setSession(authResult) {
@@ -138,7 +125,7 @@ window.addEventListener('load', function() {
         console.log('Access token must exist to fetch profile');
       }
 
-      lock.getUserInfo(accessToken, function(err, profile) {
+      webAuth.client.userInfo(accessToken, function(err, profile) {
         if (profile) {
           userProfile = profile;
           displayProfile();
@@ -159,6 +146,26 @@ window.addEventListener('load', function() {
     ).innerHTML = JSON.stringify(userProfile, null, 2);
     document.querySelector('#profile-view img').src = userProfile.picture;
   }
+
+  function handleAuthentication() {
+    webAuth.parseHash(function(err, authResult) {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        window.location.hash = '';
+        setSession(authResult);
+        loginBtn.style.display = 'none';
+        homeView.style.display = 'inline-block';
+      } else if (err) {
+        homeView.style.display = 'inline-block';
+        console.log(err);
+        alert(
+          'Error: ' + err.error + '. Check the console for further details.'
+        );
+      }
+      displayButtons();
+    });
+  }
+
+  handleAuthentication();
 
   function callAPI(endpoint, secured) {
     var url = apiUrl + endpoint;

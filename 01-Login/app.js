@@ -59,19 +59,6 @@ window.addEventListener('load', function() {
     return new Date().getTime() < expiresAt;
   }
 
-  function displayButtons() {
-    if (isAuthenticated()) {
-      loginBtn.style.display = 'none';
-      logoutBtn.style.display = 'inline-block';
-      loginStatus.innerHTML = 'You are logged in!';
-    } else {
-      loginBtn.style.display = 'inline-block';
-      logoutBtn.style.display = 'none';
-      loginStatus.innerHTML =
-        'You are not logged in! Please log in to continue.';
-    }
-  }
-
   function handleAuthentication() {
     webAuth.parseHash(function(err, authResult) {
       if (authResult && authResult.accessToken && authResult.idToken) {
@@ -88,6 +75,19 @@ window.addEventListener('load', function() {
       }
       displayButtons();
     });
+  }
+
+  function displayButtons() {
+    if (isAuthenticated()) {
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'inline-block';
+      loginStatus.innerHTML = 'You are logged in!';
+    } else {
+      loginBtn.style.display = 'inline-block';
+      logoutBtn.style.display = 'none';
+      loginStatus.innerHTML =
+        'You are not logged in! Please log in to continue.';
+    }
   }
 
   handleAuthentication();

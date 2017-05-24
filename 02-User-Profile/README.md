@@ -1,31 +1,21 @@
-# Auth0 JavaScript Calling an API
+# Auth0 JavaScript User Profile
 
-This sample demonstrates how to make secure calls to an API after authenticating a user with Auth0. The calls to the API are made with the user's `access_token`.
+This sample demonstrates how to get a user's profile using Auth0 in a JavaScript application.
 
 ## Getting Started
 
 If you haven't already done so, [sign up](https://auth0.com) for your free Auth0 account and create a new client in the [dashboard](https://manage.auth0.com). Find the **domain** and **client ID** from the settings area and add the URL for your application to the **Allowed Callback URLs** box. If you are serving the application with the provided `serve` library, that URL is `http://localhost:3000`.
 
-You must ensure that the APIs section is enabled in your Auth0 dashboard. To do so, go to the [Advanced Settings](https://manage.auth0.com/#/account/advanced) area and verify that **Enable APIs Section** is switched on. Next, navigate to APIs in the sidebar and create a new API. The identifier for your API will be required later.
-
 Clone the repo or download it from the JavaScript quickstart page in Auth0's documentation.
 
 ```bash
-cd 04-Calling-API
+cd 02-User-Profile
 npm install
 ```
 
-## Set the Client ID, Domain, and API URL
+## Set the Client ID and Domain
 
 If you download the sample from the quickstart page, it will come pre-populated with the **client ID** and **domain** for your application. If you clone the repo directly from Github, rename the `auth0-variables.js.example` file to `auth0-variables.js` and provide the **client ID** and **domain** there.
-
-You should also provide the identifier for the API you create in the Auth0 dashboard as your `apiUrl`.
-
-## Set Up the `.env` File
-
-In addition to the above-mentioned `auth0-variables.js` file, a `.env` file is provided at the root of the application. This file provides your application's credentials to the small Node server located in `server.js`.
-
-This file has two values, `AUTH0_AUDIENCE` and `AUTH0_DOMAIN`. If you download this sample from the quickstart page, the value for `AUTH0_DOMAIN` will be populated automatically, but you will still need to populate `AUTH0_AUDIENCE` manually. The value for `AUTH0_AUDIENCE` is the identifier used for an API that you create in the Auth0 dashboard.
 
 ## Run the Application
 

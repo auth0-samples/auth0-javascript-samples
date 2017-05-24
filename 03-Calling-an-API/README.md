@@ -1,21 +1,31 @@
-# Auth0 JavaScript Custom Login Form
+# Auth0 JavaScript Calling an API
 
-This sample demonstrates how to add authentication with a custom login form to a JavaScript application using Auth0.
+This sample demonstrates how to make secure calls to an API after authenticating a user with Auth0. The calls to the API are made with the user's `access_token`.
 
 ## Getting Started
 
 If you haven't already done so, [sign up](https://auth0.com) for your free Auth0 account and create a new client in the [dashboard](https://manage.auth0.com). Find the **domain** and **client ID** from the settings area and add the URL for your application to the **Allowed Callback URLs** box. If you are serving the application with the provided `serve` library, that URL is `http://localhost:3000`.
 
+Create a new API in the [APIs section](https://manage.auth0.com/#/apis) and provide an identifier for it.
+
 Clone the repo or download it from the JavaScript quickstart page in Auth0's documentation.
 
 ```bash
-cd 02-Custom-Login-Form
+cd 03-Calling-an-API
 npm install
 ```
 
-## Set the Client ID and Domain
+## Set the Client ID, Domain, and API URL
 
 If you download the sample from the quickstart page, it will come pre-populated with the **client ID** and **domain** for your application. If you clone the repo directly from Github, rename the `auth0-variables.js.example` file to `auth0-variables.js` and provide the **client ID** and **domain** there.
+
+You should also provide the identifier for the API you create in the Auth0 dashboard as your `apiUrl`.
+
+## Set Up the `.env` File
+
+In addition to the above-mentioned `auth0-variables.js` file, a `.env` file is provided at the root of the application. This file provides your application's credentials to the small Node server located in `server.js`.
+
+This file has two values, `AUTH0_AUDIENCE` and `AUTH0_DOMAIN`. If you download this sample from the quickstart page, the value for `AUTH0_DOMAIN` will be populated automatically, but you will still need to populate `AUTH0_AUDIENCE` manually. The value for `AUTH0_AUDIENCE` is the identifier used for an API that you create in the Auth0 dashboard.
 
 ## Run the Application
 
@@ -25,7 +35,7 @@ The `serve` module provided with this sample can be run with the `start` command
 npm start
 ```
 
-The application will be served at `http://localhost:5000`.
+The application will be served at `http://localhost:3000`.
 
 ## What is Auth0?
 
@@ -54,6 +64,5 @@ If you have found a bug or if you have a feature request, please report them at 
 ## License
 
 This project is licensed under the MIT license. See the [LICENSE](LICENSE.txt) file for more info.
-
 
 

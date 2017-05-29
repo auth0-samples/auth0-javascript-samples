@@ -2,6 +2,12 @@
 
 These samples demonstrate how to add authentication to a JavaScript application with Auth0. Each folder contains a distinct application so that various Auth0 features can be viewed in isolation.
 
+## Embedded Integration Samples
+
+These samples use Auth0's [hosted login page](https://auth0.com/docs/hosted-pages/login) which offers the fastest, most secure, and most feature-rich way to add authentication to your app.
+
+For samples which demonstrate how to embed the Lock widget or a custom login form directly into your application, see the [embedded-login](https://github.com/auth0-samples/auth0-javascript-samples/tree/embedded-login) branch.
+
 ## What is Auth0?
 
 Auth0 helps you to:

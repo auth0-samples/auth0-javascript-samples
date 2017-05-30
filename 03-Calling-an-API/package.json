@@ -15,8 +15,9 @@
     "bootstrap": "^3.3.7",
     "cors": "^2.8.1",
     "dotenv": "^4.0.0",
-    "express": "^4.14.0",
-    "express-jwt": "^5.1.0",
+    "express": "^4.15.3",
+    "express-jwt": "^5.3.0",
+    "express-jwt-authz" :"^1.0.0",
     "jwks-rsa": "^1.1.1",
     "npm-run-all": "^4.0.2",
     "serve": "^3.4.1"

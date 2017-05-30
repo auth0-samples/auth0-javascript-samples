@@ -14,7 +14,8 @@ window.addEventListener('load', function() {
     redirectUri: AUTH0_CALLBACK_URL,
     audience: API_ID,
     responseType: 'token id_token',
-    scope: 'openid profile read:messages'
+    scope: 'openid profile read:messages',
+    leeway: 30
   });
 
   var homeView = document.getElementById('home-view');

@@ -1,6 +1,6 @@
-# Auth0 JavaScript Calling an API
+# Auth0 JavaScript Authorization
 
-This sample demonstrates how to make secure calls to an API after authenticating a user with Auth0. The calls to the API are made with the user's `access_token`.
+This sample demonstrates how to include user authorization in a JavaScript application with Auth0.
 
 ## Getting Started
 

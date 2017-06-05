@@ -6,7 +6,7 @@ This sample demonstrates how to make secure calls to an API after authenticating
 
 If you haven't already done so, [sign up](https://auth0.com) for your free Auth0 account and create a new client in the [dashboard](https://manage.auth0.com). Find the **domain** and **client ID** from the settings area and add the URL for your application to the **Allowed Callback URLs** box. If you are serving the application with the provided `serve` library, that URL is `http://localhost:3000`.
 
-Create a new API in the [APIs section](https://manage.auth0.com/#/apis) and provide an identifier for it.
+If you haven't already done so, create a new API in the [APIs section](https://manage.auth0.com/#/apis) and provide an identifier for it.
 
 Clone the repo or download it from the JavaScript quickstart page in Auth0's documentation.
 

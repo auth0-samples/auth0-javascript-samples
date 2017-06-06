@@ -1,5 +1,4 @@
 window.addEventListener('load', function() {
-
   var content = document.querySelector('.content');
   var loadingSpinner = document.getElementById('loading');
   content.style.display = 'block';
@@ -155,7 +154,8 @@ window.addEventListener('load', function() {
       profileViewBtn.style.display = 'inline-block';
       pingPrivate.style.display = 'inline-block';
       callPrivateMessage.style.display = 'none';
-      loginStatus.innerHTML = 'You are logged in! You can now view your admin area.';
+      loginStatus.innerHTML =
+        'You are logged in! You can now view your admin area.';
     } else {
       homeView.style.display = 'inline-block';
       loginBtn.style.display = 'inline-block';
@@ -163,10 +163,12 @@ window.addEventListener('load', function() {
       profileViewBtn.style.display = 'none';
       profileView.style.display = 'none';
       pingViewBtn.style.display = 'none';
+      adminView.style.display = 'none';
       pingView.style.display = 'none';
       pingPrivate.style.display = 'none';
       callPrivateMessage.style.display = 'block';
-      loginStatus.innerHTML = 'You are not logged in! Please log in to continue.';
+      loginStatus.innerHTML =
+        'You are not logged in! Please log in to continue.';
     }
     if (!isAuthenticated || !userHasScopes(['write:messages'])) {
       adminViewBtn.style.display = 'none';
@@ -196,9 +198,8 @@ window.addEventListener('load', function() {
 
   function displayProfile() {
     // display the profile
-    document.querySelector(
-      '#profile-view .nickname'
-    ).innerHTML = userProfile.nickname;
+    document.querySelector('#profile-view .nickname').innerHTML =
+      userProfile.nickname;
     document.querySelector(
       '#profile-view .full-profile'
     ).innerHTML = JSON.stringify(userProfile, null, 2);
@@ -224,7 +225,9 @@ window.addEventListener('load', function() {
   }
 
   function userHasScopes(scopes) {
-    var grantedScopes = JSON.parse(localStorage.getItem('scopes')).split(' ');
+    var savedScopes = JSON.parse(localStorage.getItem('scopes'));
+    if (!savedScopes) return false;
+    var grantedScopes = savedScopes.split(' ');
     for (var i = 0; i < scopes.length; i++) {
       if (grantedScopes.indexOf(scopes[i]) < 0) {
         return false;

@@ -102,6 +102,7 @@ window.addEventListener('load', function() {
       loginBtn.style.display = 'none';
       logoutBtn.style.display = 'inline-block';
       profileViewBtn.style.display = 'inline-block';
+      pingViewBtn.style.display = 'inline-block';
       pingPrivate.style.display = 'inline-block';
       callPrivateMessage.style.display = 'none';
       loginStatus.innerHTML = 'You are logged in! You can now send authenticated requests to your server.';
@@ -112,6 +113,7 @@ window.addEventListener('load', function() {
       profileViewBtn.style.display = 'none';
       profileView.style.display = 'none';
       pingView.style.display = 'none';
+      pingViewBtn.style.display = 'none';
       pingPrivate.style.display = 'none';
       callPrivateMessage.style.display = 'block';
       loginStatus.innerHTML = 'You are not logged in! Please log in to continue.';

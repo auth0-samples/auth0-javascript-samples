@@ -12,7 +12,7 @@ window.addEventListener('load', function() {
     audience: 'https://' + AUTH0_DOMAIN + '/userinfo',
     responseType: 'token id_token',
     scope: 'openid profile',
-    leeway: 30
+    leeway: 60
   });
 
   var loginStatus = document.querySelector('.container h4');

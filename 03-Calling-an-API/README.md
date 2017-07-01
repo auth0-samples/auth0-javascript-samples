@@ -19,7 +19,7 @@ npm install
 
 If you download the sample from the quickstart page, it will come pre-populated with the **client ID** and **domain** for your application. If you clone the repo directly from Github, rename the `auth0-variables.js.example` file to `auth0-variables.js` and provide the **client ID** and **domain** there.
 
-You should also provide the identifier for the API you create in the Auth0 dashboard as your `apiUrl`.
+You should also provide the identifier for the API you create in the Auth0 dashboard as your `apiUrl`. At the same time you should define the expected value(`'read:messages'`) for the [required scope argument](https://github.com/auth0-samples/auth0-javascript-samples/blob/master/03-Calling-an-API/app.js#L17) in creating `auth0.WebAuth`.
 
 ## Set Up the `.env` File
 

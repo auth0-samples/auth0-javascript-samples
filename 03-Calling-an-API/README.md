@@ -4,7 +4,7 @@ This sample demonstrates how to make secure calls to an API after authenticating
 
 ## Getting Started
 
-If you haven't already done so, [sign up](https://auth0.com) for your free Auth0 account and create a new client in the [dashboard](https://manage.auth0.com). Find the **domain** and **client ID** from the settings area and add the URL for your application to the **Allowed Callback URLs** box. If you are serving the application with the provided `serve` library, that URL is `http://localhost:3000`.
+If you haven't already done so, [sign up](https://auth0.com) for your free Auth0 account and create a new client in the [dashboard](https://manage.auth0.com). Find the **domain** and **client ID** from the settings area and add the URL for your application to the **Allowed Callback URLs** box. If you are serving the application with the provided `serve` library, that URL is `http://localhost:5000`.
 
 If you haven't already done so, create a new API in the [APIs section](https://manage.auth0.com/#/apis) and provide an identifier for it.
 
@@ -35,7 +35,7 @@ The `serve` module provided with this sample can be run with the `start` command
 npm start
 ```
 
-The application will be served at `http://localhost:3000`.
+The application will be served at `http://localhost:5000`.
 
 ## What is Auth0?
 

@@ -1,31 +1,41 @@
-# Auth0 JavaScript User Profile
+# Auth0 JavaScript Token Renewal
 
-This sample demonstrates how to get a user's profile using Auth0 in a JavaScript application.
+This sample demonstrates how to silently renew `access_token`s in a JavaScript application with Auth0.
 
 ## Getting Started
 
-If you haven't already done so, [sign up](https://auth0.com) for your free Auth0 account and create a new client in the [dashboard](https://manage.auth0.com). Find the **domain** and **client ID** from the settings area and add the URL for your application to the **Allowed Callback URLs** box. If you are serving the application with the provided `serve` library, that URL is `http://localhost:5000`.
+Create a new API in the [APIs section](https://manage.auth0.com/#/apis) and provide an identifier for it.
 
 Clone the repo or download it from the JavaScript quickstart page in Auth0's documentation.
 
 ```bash
-cd 02-User-Profile
+cd 05-Token-Renewal
 npm install
 ```
 
-## Set the Client ID and Domain
+## Set the Client ID, Domain, and API URL
 
 If you download the sample from the quickstart page, it will come pre-populated with the **client ID** and **domain** for your application. If you clone the repo directly from Github, rename the `auth0-variables.js.example` file to `auth0-variables.js` and provide the **client ID** and **domain** there.
 
+You should also provide the identifier for the API you create in the Auth0 dashboard as your `AUTH0_AUDIENCE`.
+
+## Set Up the `silent.html` File
+
+If you download the sample from the quickstart page, it will come pre-populated with the **client ID** and **domain** for your application. If you clone the repo directly from Github, edit `silent.html` and add your **client ID** and **domain**.
+
 ## Run the Application
 
-The `serve` module provided with this sample can be run with the `start` command.
+The development server that comes with create-JavaScript-app can be used to serve the application.
 
 ```bash
 npm start
 ```
 
 The application will be served at `http://localhost:5000`.
+
+## Troubleshooting
+
+If you see an error on renewal saying `login_required`, that means you may be using the Auth0 dev keys for whichever social login you're testing. You'll need to add your own keys for this to work.
 
 ## What is Auth0?
 
@@ -54,5 +64,3 @@ If you have found a bug or if you have a feature request, please report them at 
 ## License
 
 This project is licensed under the MIT license. See the [LICENSE](LICENSE.txt) file for more info.
-
-

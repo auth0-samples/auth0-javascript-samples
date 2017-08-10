@@ -49,11 +49,11 @@ window.addEventListener('load', function() {
     webAuth.authorize();
   });
 
+  logoutBtn.addEventListener('click', logout);
+
   renewTokenBtn.addEventListener('click', function() {
     renewToken();
   });
-
-  logoutBtn.addEventListener('click', logout);
 
   function setSession(authResult) {
     // Set the time that the access token will expire at

@@ -5,7 +5,6 @@ window.addEventListener('load', function() {
   loadingSpinner.style.display = 'none';
 
   var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, {
-    oidcConformant: true,
     autoclose: true,
     auth: {
       redirectUrl: AUTH0_CALLBACK_URL,

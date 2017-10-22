@@ -56,7 +56,7 @@ window.addEventListener('load', function() {
   googleLoginBtn.addEventListener('click', loginWithGoogle);
 
   function login(username, password) {
-    webAuth.client.login(
+    webAuth.login(
       {
         realm: 'Username-Password-Authentication',
         username: username,

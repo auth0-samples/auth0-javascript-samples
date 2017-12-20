@@ -4,21 +4,15 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "npm-run-all --parallel server client",
-    "server": "node server.js",
-    "client": "serve"
+    "start": "serve -p 3000"
   },
   "author": "Auth0",
   "license": "MIT",
   "dependencies": {
-    "auth0-js": "^8.8.0",
-    "bootstrap": "^3.3.7",
-    "connect-static-file": "^1.2.0",
-    "cors": "^2.8.4",
-    "express": "^4.15.4"
+    "auth0-js": "^8.12.1",
+    "bootstrap": "^3.3.7"
   },
   "devDependencies": {
-    "npm-run-all": "^4.0.2",
     "serve": "^5.1.5"
   }
 }

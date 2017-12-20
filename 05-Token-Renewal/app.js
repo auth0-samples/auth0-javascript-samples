@@ -11,7 +11,6 @@ window.addEventListener('load', function() {
     domain: AUTH0_DOMAIN,
     clientID: AUTH0_CLIENT_ID,
     redirectUri: AUTH0_CALLBACK_URL,
-    audience: AUTH0_AUDIENCE,
     responseType: 'token id_token',
     scope: 'openid profile',
     leeway: 60
@@ -29,7 +28,7 @@ window.addEventListener('load', function() {
   var homeViewBtn = document.getElementById('btn-home-view');
   var profileViewBtn = document.getElementById('btn-profile-view');
 
-  var renewTokenBtn = document.getElementById('btn-renew-token');
+  var checkSessionBtn = document.getElementById('btn-renew-token');
   var accessTokenMessage = document.getElementById('access-token-message');
   var tokenExpiryDate = document.getElementById('token-expiry-date');
 
@@ -51,7 +50,7 @@ window.addEventListener('load', function() {
 
   logoutBtn.addEventListener('click', logout);
 
-  renewTokenBtn.addEventListener('click', function() {
+  checkSessionBtn.addEventListener('click', function() {
     renewToken();
   });
 
@@ -89,7 +88,7 @@ window.addEventListener('load', function() {
       loginBtn.style.display = 'none';
       logoutBtn.style.display = 'inline-block';
       profileViewBtn.style.display = 'inline-block';
-      renewTokenBtn.style.display = 'inline-block';
+      checkSessionBtn.style.display = 'inline-block';
       accessTokenMessage.style.display = 'inline-block';
       loginStatus.innerHTML =
         'You are logged in! You can now view your profile area.';
@@ -100,7 +99,7 @@ window.addEventListener('load', function() {
       logoutBtn.style.display = 'none';
       profileViewBtn.style.display = 'none';
       profileView.style.display = 'none';
-      renewTokenBtn.style.display = 'none';
+      checkSessionBtn.style.display = 'none';
       accessTokenMessage.style.display = 'none';
       loginStatus.innerHTML =
         'You are not logged in! Please log in to continue.';
@@ -155,16 +154,11 @@ window.addEventListener('load', function() {
   }
 
   function renewToken() {
-    webAuth.renewAuth(
-      {
-        audience: AUTH0_AUDIENCE,
-        redirectUri: AUTH0_SILENT_AUTH_REDIRECT,
-        usePostMessage: true
-      },
+    webAuth.checkSession({},
       function(err, result) {
         if (err) {
           alert(
-            'Could not get a new token using silent authentication. ' +
+            'Could not get a new token. ' +
               err.description
           );
         } else {

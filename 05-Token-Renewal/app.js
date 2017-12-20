@@ -41,7 +41,13 @@ window.addEventListener('load', function() {
   profileViewBtn.addEventListener('click', function() {
     homeView.style.display = 'none';
     profileView.style.display = 'inline-block';
-    getProfile();
+    getProfile(function (err) {
+      if (err) {
+        return console.error(err);
+      }
+
+      displayProfile();
+    });
   });
 
   loginBtn.addEventListener('click', function(e) {
@@ -107,25 +113,27 @@ window.addEventListener('load', function() {
     }
   }
 
-  function getProfile() {
-    if (!userProfile) {
-      var accessToken = localStorage.getItem('access_token');
-
-      if (!accessToken) {
-        console.log('Access token must exist to fetch profile');
-      }
-
-      webAuth.client.userInfo(accessToken, function(err, profile) {
-        if (profile) {
-          userProfile = profile;
-          displayProfile();
-        }
-      });
-    } else {
-      displayProfile();
+  function getProfile(cb) {
+    // fetch profile if it doesn't already exist
+    if (userProfile) {
+      return cb();
     }
-  }
 
+    var accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      return cb(new Error('Access token must exist to fetch profile'));
+    }
+
+    webAuth.client.userInfo(accessToken, function(err, profile) {
+      if (err) return cb(err);
+
+      if (profile) {
+        userProfile = profile;
+      }
+      cb();
+    });  
+  }
+  
   function displayProfile() {
     // display the profile
     document.querySelector('#profile-view .nickname').innerHTML =

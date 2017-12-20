@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "serve -p 3000"
+    "start": "serve"
   },
   "author": "Auth0",
   "license": "MIT",

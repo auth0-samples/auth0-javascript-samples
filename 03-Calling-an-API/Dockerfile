@@ -8,4 +8,4 @@ ADD . /home/app
 
 CMD ["npm", "start"]
 
-EXPOSE 5000 3001
+EXPOSE 3000 3001

@@ -28,7 +28,7 @@ The `serve` module provided with this sample can be run with the `start` command
 npm start
 ```
 
-The application will be served at `http://localhost:5000`.
+The application will be served at `http://localhost:3000`.
 
 ## Troubleshooting
 

@@ -20,8 +20,8 @@ window.addEventListener('load', function() {
 
   // buttons and event listeners
   var homeViewBtn = document.getElementById('btn-home-view');
-  var loginBtn = document.getElementById('btn-login');
-  var logoutBtn = document.getElementById('btn-logout');
+  var loginBtn = document.getElementById('qsLoginBtn');
+  var logoutBtn = document.getElementById('qsLogoutBtn');
 
   homeViewBtn.addEventListener('click', function() {
     homeView.style.display = 'inline-block';

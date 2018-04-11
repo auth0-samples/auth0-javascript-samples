@@ -32,6 +32,7 @@ window.addEventListener('load', function() {
 
   var pingPublic = document.getElementById('btn-ping-public');
   var pingPrivate = document.getElementById('btn-ping-private');
+  var pingPrivateScoped = document.getElementById('btn-ping-private-scoped');
 
   var callPrivateMessage = document.getElementById('call-private-message');
   var pingMessage = document.getElementById('ping-message');
@@ -42,6 +43,10 @@ window.addEventListener('load', function() {
 
   pingPrivate.addEventListener('click', function() {
     callAPI('/private', true);
+  });
+
+  pingPrivateScoped.addEventListener('click', function() {
+    callAPI('/private-scoped', true);
   });
 
   loginBtn.addEventListener('click', login);

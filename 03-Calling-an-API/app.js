@@ -23,8 +23,8 @@ window.addEventListener('load', function() {
   var pingView = document.getElementById('ping-view');
 
   // buttons and event listeners
-  var loginBtn = document.getElementById('btn-login');
-  var logoutBtn = document.getElementById('btn-logout');
+  var loginBtn = document.getElementById('qsLoginBtn');
+  var logoutBtn = document.getElementById('qsLogoutBtn');
 
   var homeViewBtn = document.getElementById('btn-home-view');
   var profileViewBtn = document.getElementById('btn-profile-view');

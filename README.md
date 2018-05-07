@@ -1,5 +1,7 @@
 # Auth0 JavaScript Samples
 
+[![CircleCI](https://circleci.com/gh/auth0-samples/auth0-javascript-samples.svg?style=svg)](https://circleci.com/gh/auth0-samples/auth0-javascript-samples)
+
 These samples demonstrate how to add authentication to a JavaScript application with Auth0. Each folder contains a distinct application so that various Auth0 features can be viewed in isolation. You can read about these examples in our [Javascript Quickstart](https://auth0.com/docs/quickstart/spa/vanillajs).
 
 ## Embedded Integration Samples

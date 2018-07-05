@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "serve -p 3000"
+    "start": "serve -p 3000",
+    "test": "node test.js"
   },
   "author": "Auth0",
   "license": "MIT",
@@ -13,6 +14,7 @@
     "bootstrap": "^3.3.7"
   },
   "devDependencies": {
-    "serve": "^5.1.5"
+    "serve": "^5.1.5",
+    "auth0-quickstarts-tester": "0.1.0"
   }
 }

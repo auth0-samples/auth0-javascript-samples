@@ -35,6 +35,19 @@ You also need to set the environment variables as explained [previously](#set-th
 
 Execute in command line `sh exec.sh` to run the Docker in Linux, or `.\exec.ps1` to run the Docker in Windows.
 
+## Running the Tests
+
+**Pre-Conditions:**
+- Make sure you meet the requirements detailed in the [auth0-quickstarts-tester](https://www.npmjs.com/package/auth0-quickstarts-tester#requirements) package. Python, CasperJS, PhantomJS and Docker Desktop must be installed in your host.
+- Edit the `auth0-variables.js.example` file adding your own credentials. Rename the file to `auth0-variables.js`.
+- Edit the `test.js` file and set a valid pair of `user` and `password` credentials, used to log in into the app.
+
+Run the test:
+
+```bash
+npm test
+```
+
 ## What is Auth0?
 
 Auth0 helps you to:

@@ -13,6 +13,6 @@
     "bootstrap": "^3.3.7"
   },
   "devDependencies": {
-    "serve": "^5.1.5"
+    "serve": "^10.1.1"
   }
 }

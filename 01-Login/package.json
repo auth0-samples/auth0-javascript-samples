@@ -14,7 +14,7 @@
     "bootstrap": "^3.3.7"
   },
   "devDependencies": {
-    "serve": "^5.1.5",
-    "auth0-quickstarts-tester": "0.1.0"
+    "auth0-quickstarts-tester": "0.1.0",
+    "serve": "^10.1.1"
   }
 }

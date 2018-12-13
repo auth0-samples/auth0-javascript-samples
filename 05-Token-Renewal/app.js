@@ -1,4 +1,8 @@
 window.addEventListener('load', function() {
+  var idToken;
+  var accessToken;
+  var expiresAt;
+
   var userProfile;
   var content = document.querySelector('.content');
   var loadingSpinner = document.getElementById('loading');
@@ -55,21 +59,38 @@ window.addEventListener('load', function() {
   });
 
   function setSession(authResult) {
+    // Set isLoggedIn flag in localStorage
+    localStorage.setItem('isLoggedIn', 'true');
     // Set the time that the access token will expire at
-    var expiresAt = JSON.stringify(
+    expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', expiresAt);
+    accessToken = authResult.accessToken;
+    idToken = authResult.idToken;
     scheduleRenewal();
   }
 
+  function renewSession() {
+    webAuth.checkSession({}, (err, authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        setSession(authResult);
+      } else if (err) {
+        alert(
+            'Could not get a new token '  + err.error + ':' + err.error_description + '.'
+        );
+        logout();
+      }
+      displayButtons();
+    });
+  }
+
   function logout() {
-    // Remove tokens and expiry time from localStorage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
+    // Remove isLoggedIn flag from localStorage
+    localStorage.removeItem('isLoggedIn');
+    // Remove tokens and expiry time
+    accessToken = '';
+    idToken = '';
+    expiresAt = 0;
     clearTimeout(tokenRenewalTimeout);
     displayButtons();
   }
@@ -77,14 +98,12 @@ window.addEventListener('load', function() {
   function isAuthenticated() {
     // Check whether the current time is past the
     // access token's expiry time
-    var expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return new Date().getTime() < expiresAt;
+    return localStorage.getItem('isLoggedIn') === 'true';
   }
 
   function displayButtons() {
     var loginStatus = document.querySelector('.container h4');
     if (isAuthenticated()) {
-      var expiresAt = JSON.parse(localStorage.getItem('expires_at'));
       loginBtn.style.display = 'none';
       logoutBtn.style.display = 'inline-block';
       profileViewBtn.style.display = 'inline-block';
@@ -92,7 +111,7 @@ window.addEventListener('load', function() {
       accessTokenMessage.style.display = 'inline-block';
       loginStatus.innerHTML =
         'You are logged in! You can now view your profile area.';
-      tokenExpiryDate.innerHTML = JSON.stringify(new Date(expiresAt));
+      tokenExpiryDate.innerHTML = JSON.stringify(new Date(parseInt(expiresAt)));
     } else {
       homeView.style.display = 'inline-block';
       loginBtn.style.display = 'inline-block';
@@ -108,8 +127,6 @@ window.addEventListener('load', function() {
 
   function getProfile() {
     if (!userProfile) {
-      var accessToken = localStorage.getItem('access_token');
-
       if (!accessToken) {
         console.log('Access token must exist to fetch profile');
       }
@@ -170,7 +187,6 @@ window.addEventListener('load', function() {
   }
 
   function scheduleRenewal() {
-    var expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     var delay = expiresAt - Date.now();
     if (delay > 0) {
       tokenRenewalTimeout = setTimeout(function() {
@@ -179,6 +195,10 @@ window.addEventListener('load', function() {
     }
   }
 
-  handleAuthentication();
+  if (localStorage.getItem('isLoggedIn') === 'true') {
+    renewSession();
+  } else {
+    handleAuthentication();
+  }
   scheduleRenewal();
 });

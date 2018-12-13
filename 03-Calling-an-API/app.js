@@ -1,4 +1,7 @@
 window.addEventListener('load', function() {
+  var idToken;
+  var accessToken;
+  var expiresAt;
 
   var content = document.querySelector('.content');
   var loadingSpinner = document.getElementById('loading');
@@ -71,20 +74,37 @@ window.addEventListener('load', function() {
   }
 
   function setSession(authResult) {
+    // Set isLoggedIn flag in localStorage
+    localStorage.setItem('isLoggedIn', 'true');
     // Set the time that the access token will expire at
-    var expiresAt = JSON.stringify(
-      authResult.expiresIn * 1000 + new Date().getTime()
+    expiresAt = JSON.stringify(
+        authResult.expiresIn * 1000 + new Date().getTime()
     );
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', expiresAt);
+    accessToken = authResult.accessToken;
+    idToken = authResult.idToken;
+  }
+
+  function renewSession() {
+    webAuth.checkSession({}, (err, authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        setSession(authResult);
+      } else if (err) {
+        alert(
+            'Could not get a new token '  + err.error + ':' + err.error_description + '.'
+        );
+        logout();
+      }
+      displayButtons();
+    });
   }
 
   function logout() {
-    // Remove tokens and expiry time from localStorage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
+    // Remove isLoggedIn flag from localStorage
+    localStorage.removeItem('isLoggedIn');
+    // Remove tokens and expiry time
+    accessToken = '';
+    idToken = '';
+    expiresAt = 0;
     pingMessage.style.display = 'none';
     displayButtons();
   }
@@ -92,8 +112,8 @@ window.addEventListener('load', function() {
   function isAuthenticated() {
     // Check whether the current time is past the
     // access token's expiry time
-    var expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return new Date().getTime() < expiresAt;
+    var expiration = parseInt(expiresAt) || 0;
+    return localStorage.getItem('isLoggedIn') === 'true' && new Date().getTime() < expiration
   }
 
   function displayButtons() {
@@ -122,8 +142,6 @@ window.addEventListener('load', function() {
 
   function getProfile() {
     if (!userProfile) {
-      var accessToken = localStorage.getItem('access_token');
-
       if (!accessToken) {
         console.log('Access token must exist to fetch profile');
       }
@@ -168,7 +186,11 @@ window.addEventListener('load', function() {
     });
   }
 
-  handleAuthentication();
+  if (localStorage.getItem('isLoggedIn') === 'true') {
+    renewSession();
+  } else {
+    handleAuthentication();
+  }
 
   function callAPI(endpoint, secured) {
     var url = apiUrl + endpoint;
@@ -177,7 +199,7 @@ window.addEventListener('load', function() {
     if (secured) {
       xhr.setRequestHeader(
         'Authorization',
-        'Bearer ' + localStorage.getItem('access_token')
+        'Bearer ' + accessToken
       );
     }
     xhr.onload = function() {
@@ -192,6 +214,4 @@ window.addEventListener('load', function() {
     };
     xhr.send();
   }
-
-  displayButtons();
 });

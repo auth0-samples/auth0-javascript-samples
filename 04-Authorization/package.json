@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm-run-all --parallel server client",
     "server": "node server.js",
-    "client": "serve"
+    "client": "serve -p 3000"
   },
   "author": "Auth0",
   "license": "MIT",

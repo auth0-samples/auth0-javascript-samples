@@ -10,8 +10,8 @@
   "author": "Auth0",
   "license": "MIT",
   "dependencies": {
-    "auth0-js": "^9.0.0",
-    "bootstrap": "^3.3.7"
+    "auth0-js": "^9.8.2",
+    "bootstrap": "^3.4.0"
   },
   "devDependencies": {
     "auth0-quickstarts-tester": "0.1.0",

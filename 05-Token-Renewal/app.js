@@ -55,7 +55,7 @@ window.addEventListener('load', function() {
   logoutBtn.addEventListener('click', logout);
 
   checkSessionBtn.addEventListener('click', function() {
-    renewToken();
+    renewTokens();
   });
 
   function localLogin(authResult) {
@@ -174,7 +174,7 @@ window.addEventListener('load', function() {
     var delay = expiresAt - Date.now();
     if (delay > 0) {
       tokenRenewalTimeout = setTimeout(function() {
-        renewToken();
+        renewTokens();
       }, delay);
     }
   }

@@ -73,7 +73,7 @@ window.addEventListener('load', function() {
     webAuth.authorize();
   }
 
-  function setSession(authResult) {
+  function localLogin(authResult) {
     // Set isLoggedIn flag in localStorage
     localStorage.setItem('isLoggedIn', 'true');
     // Set the time that the access token will expire at
@@ -84,10 +84,10 @@ window.addEventListener('load', function() {
     idToken = authResult.idToken;
   }
 
-  function renewSession() {
+  function renewTokens() {
     webAuth.checkSession({}, (err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        setSession(authResult);
+        localLogin(authResult);
       } else if (err) {
         alert(
             'Could not get a new token '  + err.error + ':' + err.error_description + '.'
@@ -172,7 +172,7 @@ window.addEventListener('load', function() {
     webAuth.parseHash(function(err, authResult) {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
-        setSession(authResult);
+        localLogin(authResult);
         loginBtn.style.display = 'none';
         homeView.style.display = 'inline-block';
       } else if (err) {
@@ -187,7 +187,7 @@ window.addEventListener('load', function() {
   }
 
   if (localStorage.getItem('isLoggedIn') === 'true') {
-    renewSession();
+    renewTokens();
   } else {
     handleAuthentication();
   }

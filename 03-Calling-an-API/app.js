@@ -113,7 +113,7 @@ window.addEventListener('load', function() {
     // Check whether the current time is past the
     // access token's expiry time
     var expiration = parseInt(expiresAt) || 0;
-    return localStorage.getItem('isLoggedIn') === 'true' && new Date().getTime() < expiration
+    return localStorage.getItem('isLoggedIn') === 'true' && new Date().getTime() < expiration;
   }
 
   function displayButtons() {

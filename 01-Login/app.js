@@ -11,7 +11,7 @@ window.addEventListener('load', function() {
   var webAuth = new auth0.WebAuth({
     domain: dev-dv6xb39g.auth0.com,
     clientID: WPabtyt2_iYzodyLUHe6xQkleaQ-94iI,
-    redirectUri: AUTH0_CALLBACK_URL,
+    redirectUri: https://vladlerena.herokuapp.com/,
     responseType: 'token id_token',
     scope: 'openid',
     leeway: 60

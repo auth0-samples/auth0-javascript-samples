@@ -93,7 +93,7 @@ window.addEventListener('load', function() {
     expiresAt = 0;
 
     webAuth.logout({
-      returnTo: window.location.origin
+      return_to: window.location.origin
     });
 
     clearTimeout(tokenRenewalTimeout);

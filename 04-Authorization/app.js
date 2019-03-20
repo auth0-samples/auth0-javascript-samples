@@ -156,7 +156,7 @@ window.addEventListener('load', function() {
     scopes = '';
 
     webAuth.logout({
-      returnTo: window.location.origin
+      return_to: window.location.origin
     });
 
     pingMessage.style.display = 'none';

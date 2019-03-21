@@ -80,6 +80,11 @@ window.addEventListener('load', function() {
     accessToken = '';
     idToken = '';
     expiresAt = 0;
+
+    webAuth.logout({
+      return_to: window.location.origin
+    });
+
     displayButtons();
   }
 

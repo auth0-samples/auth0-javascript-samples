@@ -154,6 +154,11 @@ window.addEventListener('load', function() {
     idToken = '';
     expiresAt = 0;
     scopes = '';
+
+    webAuth.logout({
+      return_to: window.location.origin
+    });
+
     pingMessage.style.display = 'none';
     adminMessage.style.display = 'none';
     displayButtons();

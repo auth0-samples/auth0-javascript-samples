@@ -107,7 +107,7 @@ window.addEventListener('load', function() {
     expiresAt = 0;
 
     webAuth.logout({
-      return_to: window.location.origin
+      returnTo: window.location.origin
     });
 
     pingMessage.style.display = 'none';

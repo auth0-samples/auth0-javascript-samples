@@ -118,9 +118,7 @@ window.addEventListener('load', function() {
     // Set isLoggedIn flag in localStorage
     localStorage.setItem('isLoggedIn', 'true');
     // Set the time that the access token will expire at
-    expiresAt = JSON.stringify(
-        authResult.expiresIn * 1000 + new Date().getTime()
-    );
+    expiresAt = (authResult.expiresIn * 1000 + new Date().getTime()).toString();
 
     // If there is a value on the `scope` param from the authResult,
     // use it to set scopes in the session for the user. Otherwise

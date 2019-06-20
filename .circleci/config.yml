@@ -57,8 +57,8 @@ jobs:
   01-login:
     machine: true
     environment:
-      - AUTH0_CFG: 01-login/auth_config.json
-      - SAMPLE_PATH: 01-login
+      - AUTH0_CFG: 01-Login/auth_config.json
+      - SAMPLE_PATH: 01-Login
     <<: *defaults
 
   02-calling-an-api:

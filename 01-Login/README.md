@@ -1,4 +1,4 @@
-# SPA Login Quickstart
+# Sample 01 - Login
 
 The purpose of this article is to demonstrate how simple it is to set up and use the new Single Page Application SDK, and authenticate a user in your application using Auth0's Universal Login Page.
 
@@ -46,7 +46,7 @@ Auth0 helps you to:
 - Analytics of how, when and where users are logging in.
 - Pull data from other sources and add it to the user profile, through [JavaScript rules](https://docs.auth0.com/rules).
 
-## Create a Free Auth0 Account
+## Create a free Auth0 account
 
 1. Go to [Auth0](https://auth0.com/signup) and click Sign Up.
 2. Use Google, GitHub or Microsoft Account to login.
@@ -57,8 +57,8 @@ If you have found a bug or if you have a feature request, please report them at 
 
 ## Author
 
-[Auth0](https://auth0.com)
+[Auth0](auth0.com)
 
 ## License
 
-This project is licensed under the MIT license. See the [LICENSE](./LICENSE) file for more info.
+This project is licensed under the MIT license. See the [LICENSE](LICENSE.txt) file for more info.

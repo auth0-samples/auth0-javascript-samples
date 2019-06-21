@@ -73,8 +73,8 @@ window.addEventListener("load", function() {
   var expiresAt;
 
   var webAuth = new auth0.WebAuth({
-    domain: "${account.namespace}",
-    clientID: "${account.clientId}",
+    domain: "YOUR AUTH0 DOMAIN",
+    clientID: "YOUR AUTH0 CLIENT ID",
     responseType: "token id_token",
     scope: "openid",
     redirectUri: window.location.href

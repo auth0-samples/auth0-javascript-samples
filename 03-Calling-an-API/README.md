@@ -45,16 +45,114 @@ You also need to set the environment variables as explained [previously](#set-th
 
 Execute in command line `sh exec.sh` to run the Docker in Linux, or `.\exec.ps1` to run the Docker in Windows.
 
+## Tutorial
+
+Most single-page apps use resources from data APIs. You may want to restrict access to those resources, so that only authenticated users with sufficient privileges can access them. Auth0 lets you manage access to these resources using [API Authorization](/api-auth).
+
+This tutorial shows you how to access protected resources in your API.
+
+> **Note:** This tutorial does not show you how to add protection to your API. Read the [Backend/API quickstart documentation](https://auth0.com/docs/quickstart/backend) for instructions on how to protect your API.
+
+### Create an API
+
+In the [APIs section](https://manage.auth0.com/#/apis) of the Auth0 dashboard, click **Create API**. Provide a name and an identifier for your API.
+You will use the identifier later when you're configuring your Javascript Auth0 application instance.
+For **Signing Algorithm**, select **RS256**.
+
+![Create API](/media/articles/api-auth/create-api.png)
+
+### Add a Scope
+
+By default, the Access Token does not contain any authorization information. To limit access to your resources based on authorization, you must use scopes. Read more about scopes in the [scopes documentation](https://auth0.com/docs/scopes).
+
+In the Auth0 dashboard, in the [APIs section](https://manage.auth0.com/#/apis), click **Scopes**. Add any scopes you need to limit access to your API resources.
+
+> **Note:** You can give any names to your scopes. A common pattern is `<action>:<resource>`. The example below uses the name `read:messages` for a scope.
+
+## Configure your Application
+
+In your `auth0.WebAuth` instance, enter your API identifier as the value for `audience`.
+Add your scopes to the `scope` key.
+
+```js
+// app.js
+
+var webAuth = new auth0.WebAuth({
+  // ...
+  audience: "YOUR AUTH0 API IDENTIFIER",
+  scope: "openid profile read:messages"
+});
+```
+
+### Checkpoint
+
+Try to log in to your application again. Look at how the Access Token differs from before. It is no longer an opaque token. It is now a JSON Web Token with a payload that contains your API identifier as the value for `audience`, and the scopes you created. Read more about this token in the [JSON Web Tokens documentation](https://auth0.com/docs/jwt).
+
+> **Note:** By default, any user can ask for any scope you defined. You can implement access policies to limit this behavior using [Rules](https://auth0.com/docs/rules).
+
+## Configure a Custom XHR Request
+
+To give the authenticated user access to secured resources in your API, include the user's Access Token in the requests you send to your API.
+There are two common ways to do this.
+
+- Store the Access Token in a cookie. The Access Token is then included in all requests.
+- Send `access_token` in the `Authorization` header using the `Bearer` scheme.
+
+> **Note:** The examples below use the `Bearer` scheme.
+
+To attach the user's Access Token to HTTP calls as an `Authorization` header, add the header as an option to your requests.
+
+> **Note:** We recommend you implement a custom function which adds the header automatically.
+
+Create a new function called `callAPI`. The function wraps an XHR request with the user's Access Token included as the `Authorization` header.
+
+```js
+// app.js
+
+var apiUrl = "http://localhost:3001/api";
+
+// ...
+function callAPI(endpoint, secured) {
+  var url = apiUrl + endpoint;
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", url);
+  if (secured) {
+    xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
+  }
+  xhr.onload = function() {
+    if (xhr.status == 200) {
+      // update message
+      document.querySelector("#ping-view h2").innerHTML = JSON.parse(
+        xhr.responseText
+      ).message;
+    } else {
+      alert("Request failed: " + xhr.statusText);
+    }
+  };
+  xhr.send();
+}
+```
+
+## Protect Your API Resources
+
+To restrict access to the resources served by your API, check the incoming requests for valid authorization information.
+The authorization information is in the Access Token created for the user. To see if the token is valid, check it against the [JSON Web Key Set (JWKS)](https://auth0.com/docs/jwks) for your Auth0 account. To learn more about validating Access Tokens, read the [Verify Access Tokens tutorial](https://auth0.com/docs/api-auth/tutorials/verify-access-token).
+
+In each language and framework, you verify the Access Token differently.
+Typically, you use a middleware function to verify the token. If the token is valid, the request proceeds and the user gets access to resources in your API. If the token is invalid, the request is rejected with a `401 Unauthorized` error.
+
+> **Note:** The sample project shows how to implement this functionality using Node.js with the Express framework. To learn how to implement API protection for your server-side technology, see the [Backend/API quickstart documentation](https://auth0.com/docs/quickstart/backend).
+
 ## What is Auth0?
 
 Auth0 helps you to:
 
-* Add authentication with [multiple authentication sources](https://docs.auth0.com/identityproviders), either social like **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce, among others**, or enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory, ADFS or any SAML Identity Provider**.
-* Add authentication through more traditional **[username/password databases](https://docs.auth0.com/mysql-connection-tutorial)**.
-* Add support for **[linking different user accounts](https://docs.auth0.com/link-accounts)** with the same user.
-* Support for generating signed [Json Web Tokens](https://docs.auth0.com/jwt) to call your APIs and **flow the user identity** securely.
-* Analytics of how, when and where users are logging in.
-* Pull data from other sources and add it to the user profile, through [JavaScript rules](https://docs.auth0.com/rules).
+- Add authentication with [multiple authentication sources](https://docs.auth0.com/identityproviders), either social like **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce, among others**, or enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory, ADFS or any SAML Identity Provider**.
+- Add authentication through more traditional **[username/password databases](https://docs.auth0.com/mysql-connection-tutorial)**.
+- Add support for **[linking different user accounts](https://docs.auth0.com/link-accounts)** with the same user.
+- Support for generating signed [Json Web Tokens](https://docs.auth0.com/jwt) to call your APIs and **flow the user identity** securely.
+- Analytics of how, when and where users are logging in.
+- Pull data from other sources and add it to the user profile, through [JavaScript rules](https://docs.auth0.com/rules).
 
 ## Create a free Auth0 account
 
@@ -72,5 +170,3 @@ If you have found a bug or if you have a feature request, please report them at 
 ## License
 
 This project is licensed under the MIT license. See the [LICENSE](LICENSE.txt) file for more info.
-
-

@@ -1,15 +1,26 @@
-# Auth0 JavaScript Samples
+# Sample 02 - Calling an API
 
-This private repository holds the in-development quickstart articles and samples using [auth0-spa-js](https://github.com/auth0/auth0-spa-js).
+This app demonstrates how to log in using the Auth0 Universal Page, and call a backend API using an access token.
 
-[![CircleCI](https://circleci.com/gh/auth0-samples/auth0-javascript-samples.svg?style=svg)](https://circleci.com/gh/auth0-samples/auth0-javascript-samples)
+## Installation
 
-### Index
+After cloning the repository, run:
 
-List of available quickstarts
+```bash
+$ npm install
+```
 
-- [01 - Login](/01-login/)
-- [02 - Calling an API](/02-Calling-an-API/)
+This will install all of the necessary packages in order for the sample to run.
+
+## Running the Application
+
+To start the app from the terminal, run:
+
+```bash
+$ npm run dev
+```
+
+Open the application in the browser at [http://localhost:3000](http://localhost:3000).
 
 ## What is Auth0?
 

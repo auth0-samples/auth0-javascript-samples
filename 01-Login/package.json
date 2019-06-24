@@ -1,20 +1,21 @@
 {
-  "name": "custom-login",
-  "version": "0.0.0",
-  "description": "",
-  "main": "app.js",
+  "name": "01-login",
+  "version": "1.0.0",
+  "description": "Sample application for the new Auth0 SPA SDK",
+  "main": "server.js",
   "scripts": {
-    "start": "serve -p 3000",
-    "test": "node test.js"
+    "start": "node bin/www",
+    "dev": "nodemon bin/www"
   },
-  "author": "Auth0",
+  "keywords": [],
+  "author": "",
   "license": "MIT",
-  "dependencies": {
-    "auth0-js": "^9.10.1",
-    "bootstrap": "^3.4.0"
-  },
   "devDependencies": {
-    "auth0-quickstarts-tester": "0.1.0",
-    "serve": "^10.1.1"
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
+    "morgan": "^1.9.1"
   }
 }

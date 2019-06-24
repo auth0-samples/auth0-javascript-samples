@@ -46,6 +46,13 @@
                 <li class="nav-item">
                   <a href="/" class="nav-link route-link">Home</a>
                 </li>
+                <li class="nav-item">
+                  <a
+                    href="/external-api"
+                    class="nav-link route-link hidden auth-visible"
+                    >External API</a
+                  >
+                </li>
               </ul>
               <ul class="navbar-nav d-none d-md-block">
                 <!-- Login button: show if NOT authenticated -->
@@ -241,6 +248,28 @@
             <div class="row">
               <pre class="rounded">
                 <code id="profile-data" class="json"></code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="page" id="content-external-api">
+          <h1>External API</h1>
+          <p>
+            Ping an external API by clicking the button below. This will call
+            the external API using an access token, and the API will validate it
+            using the API's audience value.
+          </p>
+
+          <p class="mb-5">
+            <a href="#" class="btn btn-primary mt-5" id="call-api">Ping API</a>
+          </p>
+
+          <div class="result-block-container">
+            <div class="result-block reset-on-nav">
+              <h6 class="muted">Result</h6>
+              <pre>
+                <code class="js rounded" id="api-call-result">JSON.stringify(apiMessage, null, 2)</code>
+              </pre>
             </div>
           </div>
         </div>

@@ -1,6 +1,8 @@
 # Auth0 JavaScript Samples
 
-This private repository holds the in-development quickstart articles and samples using [auth0-spa-js](https://github.com/auth0/auth0-spa-js).
+This repository holds the quickstart samples using [auth0-spa-js](https://github.com/auth0/auth0-spa-js).
+
+Read the [full tutorials on Auth0.com](https://auth0.com/docs/quickstart/spa/vanillajs).
 
 [![CircleCI](https://circleci.com/gh/auth0-samples/auth0-javascript-samples.svg?style=svg)](https://circleci.com/gh/auth0-samples/auth0-javascript-samples)
 

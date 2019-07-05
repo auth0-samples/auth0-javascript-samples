@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
   <head>
     <meta charset="UTF-8" />
     <title>SPA SDK Sample</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
     <link rel="stylesheet" type="text/css" href="/css/auth0-theme.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link
@@ -23,8 +27,8 @@
     />
   </head>
 
-  <body>
-    <div id="app">
+  <body class="h-100">
+    <div id="app" class="h-100 d-flex flex-column">
       <div class="nav-container">
         <nav class="navbar navbar-expand-md navbar-light bg-light">
           <div class="container">
@@ -71,17 +75,18 @@
                     <!-- Profile image should be set to the profile picture from the id token -->
                     <img
                       alt="Profile picture"
-                      class="nav-user-profile profile-image"
+                      class="nav-user-profile profile-image rounded-circle"
+                      width="50"
                     />
                   </a>
-                  <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-menu">
                     <!-- Show the user's full name from the id token here -->
                     <div class="dropdown-header nav-user-name user-name"></div>
                     <a
                       href="/profile"
                       class="dropdown-item dropdown-profile route-link"
                     >
-                      <span class="icon icon-profile"></span> Profile
+                      <i class="fas fa-user mr-3"></i> Profile
                     </a>
                     <a
                       href="#"
@@ -89,7 +94,7 @@
                       id="qsLogoutBtn"
                       onclick="logout()"
                     >
-                      <span class="icon icon-power"></span> Log out
+                      <i class="fas fa-power-off mr-3"></i> Log out
                     </a>
                   </div>
                 </li>
@@ -109,25 +114,29 @@
               <!-- /Responsive login button -->
 
               <!-- Responsive profile dropdown: show if authenticated -->
-              <ul class="navbar-nav d-md-none auth-visible hidden">
+              <ul
+                class="navbar-nav d-md-none auth-visible hidden justify-content-between"
+                style="min-height: 125px"
+              >
                 <li class="nav-item">
                   <span class="user-info">
                     <!-- Profile image should be set to the profile picture from the id token -->
                     <img
                       alt="Profile picture"
-                      class="nav-user-profile d-inline-block profile-image"
+                      class="nav-user-profile d-inline-block profile-image rounded-circle mr-3"
+                      width="50"
                     />
                     <!-- Show the user's full name from the id token here -->
                     <h6 class="d-inline-block nav-user-name user-name"></h6>
                   </span>
                 </li>
                 <li>
-                  <span class="icon icon-profile"></span>
+                  <i class="fas fa-user mr-3"></i>
                   <a href="/profile" class="route-link">Profile</a>
                 </li>
 
                 <li>
-                  <span class="icon icon-power"></span>
+                  <i class="fas fa-power-off mr-3"></i>
                   <a href="#" id="qsLogoutBtn" onclick="logout()">Log out</a>
                 </li>
               </ul>
@@ -136,13 +145,14 @@
         </nav>
       </div>
 
-      <div id="main-content" class="container mt-5">
+      <div id="main-content" class="container mt-5 flex-grow-1">
         <div id="content-home" class="page">
           <div class="text-center hero">
             <img
               class="mb-3 app-logo"
               src="/images/logo.png"
               alt="JavaScript logo"
+              width="75"
             />
             <h1 class="mb-4">JavaScript Sample Project</h1>
 
@@ -153,10 +163,10 @@
           </div>
 
           <div class="next-steps">
-            <h2 class="mt-5 text-center">What can I do next?</h2>
+            <h2 class="my-5 text-center">What can I do next?</h2>
 
             <div class="row">
-              <div class="col-md-5">
+              <div class="col-md-5 mb-4">
                 <h6 class="mb-3">
                   <a href="https://auth0.com/docs/connections">
                     <i class="fas fa-link"></i> Configure other identity
@@ -173,7 +183,7 @@
 
               <div class="col-md"></div>
 
-              <div class="col-md-5">
+              <div class="col-md-5 mb-4">
                 <h6 class="mb-3">
                   <a href="https://auth0.com/docs/multifactor-authentication">
                     <i class="fas fa-link"></i> Enable Multifactor
@@ -190,7 +200,7 @@
             </div>
 
             <div class="row">
-              <div class="col-md-5">
+              <div class="col-md-5 mb-4">
                 <h6 class="mb-3">
                   <a href="https://auth0.com/docs/anomaly-detection">
                     <i class="fas fa-link"></i> Anomaly Detection
@@ -206,7 +216,7 @@
 
               <div class="col-md"></div>
 
-              <div class="col-md-5">
+              <div class="col-md-5 mb-4">
                 <h6 class="mb-3">
                   <a href="https://auth0.com/docs/rules">
                     <i class="fas fa-link"></i> Learn About Rules
@@ -229,7 +239,7 @@
               <div class="col-md-2">
                 <img
                   alt="User's profile picture"
-                  class="rounded-circle img-fluid profile-image"
+                  class="rounded-circle img-fluid profile-image mb-3 mb-md-0"
                 />
               </div>
               <div class="col-md">
@@ -245,17 +255,18 @@
           </div>
         </div>
       </div>
+
+      <footer class="bg-light text-center p-5">
+        <div class="logo"></div>
+        <p>
+          Sample project provided by
+          <a href="https://auth0.com">Auth0</a>
+        </p>
+      </footer>
     </div>
 
-    <footer>
-      <div class="logo"></div>
-      <p>
-        Sample project provided by
-        <a href="https://auth0.com">Auth0</a>
-      </p>
-    </footer>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="js/auth0-theme.min.js"></script>
     <script src="https://cdn.auth0.com/js/auth0-spa-js/1.0/auth0-spa-js.production.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>

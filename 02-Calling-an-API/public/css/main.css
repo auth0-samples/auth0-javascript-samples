@@ -7,10 +7,14 @@ label {
   display: block;
 }
 
-#main-content {
-  min-height: 550px;
-}
-
 .navbar {
   min-height: 115px;
+}
+
+.result-block-container .result-block {
+  opacity: 0;
+}
+
+.result-block-container .result-block.show {
+  opacity: 1;
 }

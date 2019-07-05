@@ -6,10 +6,6 @@ label {
   display: block;
 }
 
-#main-content {
-  min-height: 550px;
-}
-
 .navbar {
   min-height: 115px;
 }

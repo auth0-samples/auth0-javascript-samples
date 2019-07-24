@@ -77,7 +77,7 @@ const callApi = async () => {
   try {
     const token = await auth0.getTokenSilently();
 
-    const response = await fetch("/api/protected", {
+    const response = await fetch("/api/external", {
       headers: {
         Authorization: `Bearer ${token}`
       }

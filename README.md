@@ -1,3 +1,5 @@
+# CONTENT OF THIS FILE
+--------------------
 # Auth0 JavaScript Samples
 
 This repository holds the quickstart samples using [auth0-spa-js](https://github.com/auth0/auth0-spa-js).

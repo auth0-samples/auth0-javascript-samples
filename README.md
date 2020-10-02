@@ -7,7 +7,6 @@ Read the [full tutorials on Auth0.com](https://auth0.com/docs/quickstart/spa/van
 [![CircleCI](https://circleci.com/gh/auth0-samples/auth0-javascript-samples.svg?style=svg)](https://circleci.com/gh/auth0-samples/auth0-javascript-samples)
 
 ### Index
-
 List of available quickstarts
 
 - [01 - Login](/01-Login/)

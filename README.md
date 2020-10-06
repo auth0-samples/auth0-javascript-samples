@@ -8,7 +8,7 @@ Read the [full tutorials on Auth0.com](https://auth0.com/docs/quickstart/spa/van
 
 ### Index
 
-List of available quickstarts
+List of available quickstarts....
 
 - [01 - Login](/01-Login/)
 - [02 - Calling an API](/02-Calling-an-API/)

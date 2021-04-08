@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  caddy:
+    image: "abiosoft/caddy:latest"
+    volumes:
+      - ./certs:/root/certs # to sync mkcert certificates to Caddy
+      - ./Caddyfile:/etc/Caddyfile  # to mount custom Caddyfile
+    ports:
+      - "443:2015"
+    depends_on:
+     - login
+  login:
+    build:
+      context: ./01-Login
+      dockerfile: Dockerfile
+    environment:
+      - DOMAIN
+      - CLIENT_ID
+    ports:
+      - 3000:3000
+    volumes:
+      - ./01-Login:/app

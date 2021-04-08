@@ -8,8 +8,13 @@ app.use(morgan("dev"));
 app.use(helmet());
 app.use(express.static(join(__dirname, "public")));
 
-app.get("/auth_config.json", (req, res) => {
-  res.sendFile(join(__dirname, "auth_config.json"));
+app.get("/auth_config", (req, res) => {
+  res.send(
+    {
+      domain: process.env.DOMAIN,
+      clientId: process.env.CLIENT_ID
+    }
+  )
 });
 
 app.get("/*", (_, res) => {

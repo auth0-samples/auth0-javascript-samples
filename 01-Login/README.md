@@ -6,34 +6,38 @@ The purpose of this article is to demonstrate how simple it is to set up and use
 
 The sample can be run locally, by cloning the repository to your machine and then following the steps below.
 
+### Prerequisites
+- Docker
+- docker-compose
+
 ### Specifying Auth0 Credentials
 
-To specify the application client ID and domain, make a copy of `auth_config.json.example` and rename it to `auth_config.json`. Then open it in a text editor and supply the values for your application:
-
-```json
-{
-  "domain": "{DOMAIN}",
-  "clientId": "{CLIENT_ID}"
-}
-```
-
-### Installation
-
-After cloning the repository, run:
+To specify the application client ID and domain, make a copy of `.env.example` and rename it to `.env`. Then open it in a text editor and supply the values for your application:
 
 ```bash
-$ npm install
+DOMAIN=<DOMAIN>
+CLIENT_ID=<CLIENT_ID>
 ```
 
-This will install all of the necessary packages in order for the sample to run.
+The application settings should then be updated so that login url, callback urls, logout urls, and allowed origins all are set to `https://foo.test`.
 
-### Running the Application
+Finally add the desired connections, so that the user will actually be able to login.
 
-This version of the application uses an [Express](https://expressjs.com) server that can serve the site from a single page. To start the app from the terminal, run:
+### Add domain to hosts file
+Auth0 requires ssl encyption, therefore we are use Caddy and reverse proxy to the web application. To make it possible for Caddy to proxy traffic coming in on https, we need to provide a domain. In order to resolver the domain, we need to add it to our `hosts` file'.
 
 ```bash
-$ npm run dev
+$ sudo echo '127.0.0.1 foo.test' >> /etc/hosts
 ```
+
+### Start the server
+
+```bash
+$ docker-compose up
+```
+
+### Access the page
+The application should now be accessible on https://foo.test
 
 ## Frequently Asked Questions
 

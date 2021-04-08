@@ -1,0 +1,10 @@
+foo.test {
+    log stdout
+    # Mkcert - https://github.com/FiloSottile/mkcert
+    tls /root/certs/foo.test.pem /root/certs/foo.test-key.pem
+
+    proxy / http://login:3000 {
+        transparent
+        header_upstream Host  "foo.test"
+    }
+}

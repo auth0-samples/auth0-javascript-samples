@@ -9,7 +9,9 @@ const login = async (targetUrl) => {
     console.log("Logging in", targetUrl);
 
     const options = {
-      redirect_uri: window.location.origin
+      redirect_uri: window.location.origin,
+      // Hard code connection (database)
+      // connection: "Test-Username-Password"
     };
 
     if (targetUrl) {
@@ -39,7 +41,7 @@ const logout = () => {
 /**
  * Retrieves the auth configuration from the server
  */
-const fetchAuthConfig = () => fetch("/auth_config.json");
+const fetchAuthConfig = () => fetch("/auth_config");
 
 /**
  * Initializes the Auth0 client
@@ -47,7 +49,6 @@ const fetchAuthConfig = () => fetch("/auth_config.json");
 const configureClient = async () => {
   const response = await fetchAuthConfig();
   const config = await response.json();
-
   auth0 = await createAuth0Client({
     domain: config.domain,
     client_id: config.clientId

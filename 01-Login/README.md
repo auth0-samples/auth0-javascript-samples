@@ -9,6 +9,7 @@ The sample can be run locally, by cloning the repository to your machine and the
 ### Prerequisites
 - Docker
 - docker-compose
+- mkcert (remember to run `mkcert --install` in order to activate CA)
 
 ### Specifying Auth0 Credentials
 
@@ -28,6 +29,13 @@ Auth0 requires ssl encyption, therefore we are use Caddy and reverse proxy to th
 
 ```bash
 $ sudo echo '127.0.0.1 foo.test' >> /etc/hosts
+```
+### Create certificates
+
+```bash
+$ mkcert foo.test
+$ mkdir certs
+$ mv foo.test* certs
 ```
 
 ### Start the server

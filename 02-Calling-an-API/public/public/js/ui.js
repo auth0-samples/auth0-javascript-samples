@@ -1,9 +1,12 @@
 // URL mapping, from hash to a function that responds to that URL action
 const router = {
   "/": () => showContent("content-home"),
+  "/login": () => login(),
   "/profile": () =>
     requireAuth(() => showContent("content-profile"), "/profile"),
-  "/login": () => login(),
+  "/external-api": () =>
+    requireAuth(() => showContent("content-external-api"), "/external-api"),
+  "/login": () => login()
 };
 
 //Declare helper functions
@@ -49,8 +52,21 @@ const isRouteLink = (element) =>
  * @param {*} id The id of the content to show
  */
 const showContent = (id) => {
+  eachElement(".reset-on-nav", (e) => e.classList.remove("show"));
   eachElement(".page", (p) => p.classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
+};
+
+/**
+ *  Decode JWT
+ *
+ */
+ const DecodeJWT = (token) => {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    return null;
+  }
 };
 
 /**
@@ -62,15 +78,17 @@ const updateUI = async () => {
 
     if (isAuthenticated) {
       const user = await auth0.getUser();
-      const idTokeClaim = await auth0.getIdTokenClaims();
+      const idTokenClaim = await auth0.getIdTokenClaims();
+      const jwtTokenDecode = await auth0.getTokenSilently();
 
       document.getElementById("gated-content").classList.remove("hidden");
 
-      document.getElementById("ipt-access-token").innerHTML =
-        await auth0.getTokenSilently();
+      document.getElementById("ipt-access-token").innerHTML = JSON.stringify(
+        DecodeJWT(jwtTokenDecode), null, 2
+      );
 
       document.getElementById("ipt-access-token-claims").innerHTML = JSON.stringify(
-        idTokeClaim, null, 2
+        idTokenClaim, null, 2
       );
 
       document.getElementById("ipt-user-profile").innerHTML = JSON.stringify(
@@ -89,7 +107,6 @@ const updateUI = async () => {
       eachElement(".auth-invisible", (e) => e.classList.add("hidden"));
       eachElement(".auth-visible", (e) => e.classList.remove("hidden"));
     } else {
-      document.getElementById("gated-content").classList.add("hidden");
       eachElement(".auth-invisible", (e) => e.classList.remove("hidden"));
       eachElement(".auth-visible", (e) => e.classList.add("hidden"));
     }

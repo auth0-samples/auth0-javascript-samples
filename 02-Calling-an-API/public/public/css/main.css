@@ -1,0 +1,20 @@
+.hidden {
+  display: none;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.navbar {
+  min-height: 115px;
+}
+
+.result-block-container .result-block {
+  opacity: 0;
+}
+
+.result-block-container .result-block.show {
+  opacity: 1;
+}

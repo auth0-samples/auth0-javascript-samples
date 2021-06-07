@@ -166,6 +166,31 @@
             </p>
           </div>
 
+          <div class="hidden" id="gated-content">
+            <p>
+             You're seeing this content because you're currently
+             <strong>logged in</strong>.
+            </p>
+            <p>
+            <strong>Opaque access tokens</strong> : Tokens in a proprietary format that typically contain some identifier to information in a server’s persistent storage.
+              To validate an opaque token, the recipient of the token needs to call the server that issued the token.
+              Opaque Access Tokens are tokens whose format you cannot access.
+              Opaque Access Tokens issued by Auth0 can be used with the /userinfo endpoint to return a user’s profile.
+            </p>
+            <label>
+            <strong>Opaque access tokens:</strong>
+             <pre id="ipt-access-token"></pre>
+            </label>
+            <label>
+            <strong>ID token claims:</strong>
+             <pre id="ipt-access-token-claims"></pre>
+            </label>
+            <label>
+            <strong>User profile:</strong>
+             <pre id="ipt-user-profile"></pre>
+            </label>
+          </div>
+
           <div class="next-steps">
             <h2 class="my-5 text-center">What can I do next?</h2>
 

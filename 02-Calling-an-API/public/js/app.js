@@ -1,5 +1,5 @@
 // The Auth0 client, initialized in configureClient()
-let auth0 = null;
+let auth0Client = null;
 
 /**
  * Starts the authentication flow
@@ -16,7 +16,7 @@ const login = async (targetUrl) => {
       options.appState = { targetUrl };
     }
 
-    await auth0.loginWithRedirect(options);
+    await auth0Client.loginWithRedirect(options);
   } catch (err) {
     console.log("Log in failed", err);
   }
@@ -25,11 +25,13 @@ const login = async (targetUrl) => {
 /**
  * Executes the logout flow
  */
-const logout = () => {
+const logout = async () => {
   try {
     console.log("Logging out");
-    auth0.logout({
-      returnTo: window.location.origin
+    await auth0Client.logout({
+      logoutParams: {
+        returnTo: window.location.origin
+      }
     });
   } catch (err) {
     console.log("Log out failed", err);
@@ -48,10 +50,12 @@ const configureClient = async () => {
   const response = await fetchAuthConfig();
   const config = await response.json();
 
-  auth0 = await createAuth0Client({
+  auth0Client = await auth0.createAuth0Client({
     domain: config.domain,
-    client_id: config.clientId,
-    audience: config.audience
+    clientId: config.clientId,
+    authorizationParams: {
+      audience: config.audience
+    }
   });
 };
 
@@ -61,7 +65,7 @@ const configureClient = async () => {
  * @param {*} fn The function to execute if the user is logged in
  */
 const requireAuth = async (fn, targetUrl) => {
-  const isAuthenticated = await auth0.isAuthenticated();
+  const isAuthenticated = await auth0Client.isAuthenticated();
 
   if (isAuthenticated) {
     return fn();
@@ -75,7 +79,7 @@ const requireAuth = async (fn, targetUrl) => {
  */
 const callApi = async () => {
   try {
-    const token = await auth0.getTokenSilently();
+    const token = await auth0Client.getTokenSilently();
 
     const response = await fetch("/api/external", {
       headers: {
@@ -123,7 +127,7 @@ window.onload = async () => {
     }
   });
 
-  const isAuthenticated = await auth0.isAuthenticated();
+  const isAuthenticated = await auth0Client.isAuthenticated();
 
   if (isAuthenticated) {
     console.log("> User is authenticated");
@@ -140,7 +144,7 @@ window.onload = async () => {
   if (shouldParseResult) {
     console.log("> Parsing redirect");
     try {
-      const result = await auth0.handleRedirectCallback();
+      const result = await auth0Client.handleRedirectCallback();
 
       if (result.appState && result.appState.targetUrl) {
         showContentFromUrl(result.appState.targetUrl);

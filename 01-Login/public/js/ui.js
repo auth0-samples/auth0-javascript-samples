@@ -58,10 +58,10 @@ const showContent = (id) => {
  */
 const updateUI = async () => {
   try {
-    const isAuthenticated = await auth0.isAuthenticated();
+    const isAuthenticated = await auth0Client.isAuthenticated();
 
     if (isAuthenticated) {
-      const user = await auth0.getUser();
+      const user = await auth0Client.getUser();
 
       document.getElementById("profile-data").innerText = JSON.stringify(
         user,

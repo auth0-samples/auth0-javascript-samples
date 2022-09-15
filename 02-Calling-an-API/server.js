@@ -1,8 +1,9 @@
 const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
-const { auth } = require("express-oauth2-jwt-bearer");
+const { auth } = require("express-oauth2-jwt-dpop");
 const { join } = require("path");
+const cors = require('cors');
 const authConfig = require("./auth_config.json");
 
 const app = express();
@@ -11,13 +12,20 @@ if (!authConfig.domain || !authConfig.audience) {
   throw "Please make sure that auth_config.json is in place and populated";
 }
 
+app.use(
+    cors({
+      origin: true,
+      allowedHeaders: ['Authorization', 'DPoP'],
+      exposedHeaders: ['WWW-Authenticate'],
+    })
+);
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(express.static(join(__dirname, "public")));
 
 const checkJwt = auth({
   audience: authConfig.audience,
-  issuerBaseURL: `https://${authConfig.domain}`,
+  issuerBaseURL: authConfig.domain,
 });
 
 app.get("/api/external", checkJwt, (req, res) => {

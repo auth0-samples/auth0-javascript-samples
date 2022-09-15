@@ -9,7 +9,9 @@ const login = async (targetUrl) => {
     console.log("Logging in", targetUrl);
 
     const options = {
-      redirect_uri: window.location.origin
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
     };
 
     if (targetUrl) {
@@ -48,10 +50,16 @@ const configureClient = async () => {
   const response = await fetchAuthConfig();
   const config = await response.json();
 
-  auth0 = await createAuth0Client({
+  auth0 = await window.auth0.createAuth0Client({
     domain: config.domain,
-    client_id: config.clientId,
-    audience: config.audience
+    clientId: config.clientId,
+    authorizationParams: {
+      audience: config.audience,
+      scope: 'read:products'
+    },
+    useDPoP: true,
+    useRefreshTokensFallback: true,
+    useRefreshTokens: true
   });
 };
 
@@ -75,13 +83,7 @@ const requireAuth = async (fn, targetUrl) => {
  */
 const callApi = async () => {
   try {
-    const token = await auth0.getTokenSilently();
-
-    const response = await fetch("/api/external", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    const response = await auth0.authorizedDPoPRequest("http://localhost:3000/api/external");
 
     const responseData = await response.json();
     const responseElement = document.getElementById("api-call-result");

@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const app = require("../server");
+const provider = require('../oidc-provider');
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
+provider.listen(3001, () => console.log(`IPD listening on port 3001`))

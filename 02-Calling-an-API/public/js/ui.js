@@ -66,6 +66,9 @@ const updateUI = async () => {
 
     if (isAuthenticated) {
       const user = await auth0.getUser();
+      user.picture = user.picture || 'https://avatars.slack-edge.com/2020-02-17/956212020064_820a231de6d90531f0e3_192.jpg';
+      user.name = user.name || 'adam';
+      user.email = user.email || 'adam@example.com';
 
       document.getElementById("profile-data").innerText = JSON.stringify(
         user,

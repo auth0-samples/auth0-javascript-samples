@@ -1,0 +1,5 @@
+{
+  "domain": "http://localhost:3001",
+  "clientId": "dpop",
+  "audience": "https://api.example.com/products"
+}

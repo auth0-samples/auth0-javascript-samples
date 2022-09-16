@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^1.19.4"
+    "nodemon": "^2.0.19"
   },
   "dependencies": {
     "express": "^4.18.1",

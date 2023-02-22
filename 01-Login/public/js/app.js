@@ -24,6 +24,44 @@ const login = async (targetUrl) => {
   }
 };
 
+const getTokenSilently = async () => {
+  try {
+    await auth0Client.getTokenSilently();
+  } catch (err) {
+    console.log("Get Token failed", err);
+  }
+};
+
+const getTokenSilentlyWithScope = async () => {
+  try {
+    // Here we are passing a set of scope's that does not match any scope used previously
+    const options = {
+      authorizationParams: {
+        scope: 'scope-a'
+      }
+    };
+
+    await auth0Client.getTokenSilently(options);
+  } catch (err) {
+    console.log("Get Token failed", err);
+  }
+};
+
+const getTokenSilentlyWithAudience = async () => {
+  try {
+    // Here we are passing an Audience that does not match any scope used previously
+    const options = {
+      authorizationParams: {
+        audience: 'Test'
+      }
+    };
+
+    await auth0Client.getTokenSilently(options);
+  } catch (err) {
+    console.log("Get Token failed", err);
+  }
+};
+
 /**
  * Executes the logout flow
  */
@@ -54,7 +92,8 @@ const configureClient = async () => {
 
   auth0Client = await auth0.createAuth0Client({
     domain: config.domain,
-    clientId: config.clientId
+    clientId: config.clientId,
+    useRefreshTokens: true
   });
 };
 

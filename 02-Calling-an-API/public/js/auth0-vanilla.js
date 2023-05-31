@@ -55,10 +55,13 @@ const configureClient = async () => {
   auth0Client = await auth0.createAuth0Client({
     domain: config.domain,
     clientId: config.clientId,
+    cacheLocation: config.cacheLocation,
+    useRefreshTokens: true,
     authorizationParams: {
       audience: config.audience
     }
-  });
+    
+  });    
 };
 
 /**
@@ -102,9 +105,11 @@ const callApi = async () => {
   }
 };
 
+const auth0ClientPromise = configureClient();
+
 // Will run when page finishes loading
 window.onload = async () => {
-  await configureClient();
+  await auth0ClientPromise;
 
   // If unable to parse the history hash, default to the root URL
   if (!showContentFromUrl(window.location.pathname)) {
@@ -158,7 +163,40 @@ window.onload = async () => {
     }
 
     window.history.replaceState({}, document.title, "/");
+  } else {
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    if (!isAuthenticated) {
+      return login(window.location.origin);
+    }
   }
 
   updateUI();
 };
+
+(async function(){
+  await auth0ClientPromise;  
+  const isAuthenticated = await auth0Client.isAuthenticated();
+  if (!isAuthenticated) {
+    const query = window.location.search;
+    const shouldParseResult = query.includes("code=") && query.includes("state=");
+    
+    if (shouldParseResult) {
+      console.log("> Parsing redirect");
+      try {
+        const result = await auth0Client.handleRedirectCallback();
+  
+        console.log("Logged in!");
+      } catch (err) {
+        console.log("Error parsing redirect:", err);
+      }
+  
+      window.history.replaceState({}, document.title, "/");
+  
+    } else {
+      const isAuthenticated = await auth0Client.isAuthenticated();
+      if (!isAuthenticated) {
+        return login(window.location.origin);
+      }
+    }
+  }
+}) ();

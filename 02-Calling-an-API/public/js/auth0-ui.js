@@ -84,6 +84,7 @@ if (isAuthenticated) {
 
     window.history.replaceState({}, document.title, "/");
   } else {
+    // Treat all pages as protected and redirect to login when not yet authenticated
     login();
   }
 

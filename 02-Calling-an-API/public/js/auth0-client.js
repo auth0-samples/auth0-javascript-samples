@@ -3,8 +3,6 @@
 // For this example we do not have client dependencies installed via npm.
 const createAuth0Client = globalThis.auth0.createAuth0Client;
 
-let auth0Client;
-
 const fetchAuthConfig = () => fetch("/auth_config.json");
 
 /**
@@ -79,6 +77,6 @@ const requireAuth = async (fn, targetUrl) => {
   return login(targetUrl);
 };
 
-auth0Client = await createClient();
+const auth0Client = await createClient();
 
 export { auth0Client, login, logout, requireAuth };

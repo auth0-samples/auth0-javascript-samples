@@ -1,3 +1,5 @@
+import { auth0Client, requireAuth, login, logout } from "./auth0-client.js";
+
 // URL mapping, from hash to a function that responds to that URL action
 const router = {
   "/": () => showContent("content-home"),
@@ -6,7 +8,7 @@ const router = {
     requireAuth(() => showContent("content-profile"), "/profile"),
   "/external-api": () =>
     requireAuth(() => showContent("content-external-api"), "/external-api"),
-  "/login": () => login()
+  "/login": () => login(),
 };
 
 //Declare helper functions
@@ -17,7 +19,7 @@ const router = {
  * @param {*} selector The CSS selector to find
  * @param {*} fn The function to execute for every element
  */
-const eachElement = (selector, fn) => {
+export const eachElement = (selector, fn) => {
   for (let e of document.querySelectorAll(selector)) {
     fn(e);
   }
@@ -29,7 +31,7 @@ const eachElement = (selector, fn) => {
  * router, defined above.
  * @param {*} url The route URL
  */
-const showContentFromUrl = (url) => {
+export const showContentFromUrl = (url) => {
   if (router[url]) {
     router[url]();
     return true;
@@ -42,7 +44,7 @@ const showContentFromUrl = (url) => {
  * Returns true if `element` is a hyperlink that can be considered a link to another SPA route
  * @param {*} element The element to check
  */
-const isRouteLink = (element) =>
+export const isRouteLink = (element) =>
   element.tagName === "A" && element.classList.contains("route-link");
 
 /**
@@ -60,7 +62,7 @@ const showContent = (id) => {
 /**
  * Updates the user interface
  */
-const updateUI = async () => {
+export const updateUI = async () => {
   try {
     const isAuthenticated = await auth0Client.isAuthenticated();
 
@@ -74,6 +76,9 @@ const updateUI = async () => {
       );
 
       document.querySelectorAll("pre code").forEach(hljs.highlightBlock);
+
+      eachElement("#qsLoginBtn", (e) => e.addEventListener("click", login));
+      eachElement("#qsLogoutBtn", (e) => e.addEventListener("click", logout));
 
       eachElement(".profile-image", (e) => (e.src = user.picture));
       eachElement(".user-name", (e) => (e.innerText = user.name));

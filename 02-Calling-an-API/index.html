@@ -30,7 +30,9 @@
       href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css"
     />
     <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
-    <script src="js/auth0-vanilla.js"></script>
+    <!-- <script src="js/auth0-vanilla.js"></script> -->
+    <script type="module" src="js/auth0-client.js"></script>
+    <script defer type="module" src="js/auth0-ui.js"></script>
   </head>
 
   <body class="h-100">
@@ -69,7 +71,6 @@
                 <li class="nav-item auth-invisible">
                   <button
                     id="qsLoginBtn"
-                    onclick="login()"
                     class="btn btn-primary btn-margin auth-invisible hidden"
                   >
                     Log in
@@ -105,7 +106,6 @@
                       href="#"
                       class="dropdown-item"
                       id="qsLogoutBtn"
-                      onclick="logout()"
                     >
                       <i class="fas fa-power-off mr-3"></i> Log out
                     </a>
@@ -119,7 +119,6 @@
                 <button
                   class="btn btn-primary btn-block auth-invisible hidden"
                   id="qsLoginBtn"
-                  onclick="login()"
                 >
                   Log in
                 </button>
@@ -162,7 +161,7 @@
 
                 <li>
                   <i class="fas fa-power-off mr-3"></i>
-                  <a href="#" id="qsLogoutBtn" onclick="logout()">Log out</a>
+                  <a href="#" id="qsLogoutBtn">Log out</a>
                 </li>
               </ul>
             </div>
@@ -315,6 +314,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-    <script src="js/ui.js"></script>
+    <script defer type="module" src="js/ui.js"></script>
   </body>
 </html>

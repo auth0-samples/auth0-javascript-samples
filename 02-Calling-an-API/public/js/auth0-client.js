@@ -8,7 +8,7 @@ let auth0Client;
 const fetchAuthConfig = () => fetch("/auth_config.json");
 
 /**
- *
+ * Called once to create a single instance of the Auth0 SDK client
  * @returns Auth0Client
  */
 async function createClient() {

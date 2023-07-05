@@ -18,7 +18,13 @@ const login = async (targetUrl) => {
       options.appState = { targetUrl };
     }
 
-    await auth0Client.loginWithRedirect(options);
+    await auth0Client.loginWithRedirect({
+      ...options,
+      authorizationParams: {
+        ...options.authorizationParams,
+        organization: prompt('Please enter your Organization Name or ID:', '')
+      }
+    });
   } catch (err) {
     console.log("Log in failed", err);
   }
@@ -109,7 +115,7 @@ window.onload = async () => {
   console.log("> User not authenticated");
 
   const query = window.location.search;
-  const shouldParseResult = query.includes("code=") && query.includes("state=");
+  const shouldParseResult = (query.includes("code=") || query.includes("error=")) && query.includes("state=");
 
   if (shouldParseResult) {
     console.log("> Parsing redirect");

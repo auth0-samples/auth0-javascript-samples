@@ -1,5 +1,5 @@
 {
-  "name": "03-calling-an-api",
+  "name": "02-calling-an-api",
   "version": "1.0.0",
   "description": "The purpose of this article is to demonstrate how to call a backend API using an access token",
   "main": "server.js",

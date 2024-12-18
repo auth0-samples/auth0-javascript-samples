@@ -6,6 +6,7 @@ Read the [full tutorials on Auth0.com](https://auth0.com/docs/quickstart/spa/van
 
 [![CircleCI](https://circleci.com/gh/auth0-samples/auth0-javascript-samples.svg?style=svg)](https://circleci.com/gh/auth0-samples/auth0-javascript-samples)
 
+
 ### Index
 
 List of available quickstarts
@@ -36,6 +37,16 @@ If you have found a bug or if you have a feature request, please report them at 
 ## Author
 
 [Auth0](auth0.com)
+
+## Deploy to Netlify
+You can deploy this example as a site on your own to explore and experiment with, by clicking this button.
+After deploy, install Auth0 by Okta extension in Netlify and follow the steps to create an App. 
+
+<a href="https://app.netlify.com/start/deploy?repository=https://github.com/auth0-samples/auth0-javascript-samples"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" height=30px></a>
+
+
+
+
 
 ## License
 

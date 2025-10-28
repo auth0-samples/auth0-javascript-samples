@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cap'n Web + Auth0 Demo</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn.auth0.com/website/auth0_favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.auth0.com/website/auth0_favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --auth0-orange: #eb5424;
+            --auth0-dark: #0f1419;
+            --auth0-darker: #0a0e13;
+            --auth0-light: #ffffff;
+            --auth0-gray: #8b9cb5;
+            --auth0-light-gray: #1e2328;
+            --auth0-border: #2d3748;
+            --capn-blue: #4285f4;
+            --success-green: #48bb78;
+            --warning-yellow: #ed8936;
+            --danger-red: #f56565;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            --gradient-dark: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            --gradient-darker: linear-gradient(135deg, #0f1419 0%, #1a202c 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gradient-darker);
+            min-height: 100vh;
+            padding: 1rem;
+            color: var(--auth0-light);
+        }
+        
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--auth0-dark);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 1px solid var(--auth0-border);
+        }
+        
+        .header {
+            background: var(--gradient-dark);
+            color: var(--auth0-light);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 2px solid var(--auth0-orange);
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(235,84,36,0.1)"/><circle cx="80" cy="80" r="1" fill="rgba(235,84,36,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(235,84,36,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--auth0-light);
+        }
+        
+        .auth0-logo {
+            height: 40px;
+            width: auto;
+            filter: brightness(1.1);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            color: var(--auth0-gray);
+        }
+        
+        .badge {
+            display: inline-block;
+            background: rgba(235, 84, 36, 0.2);
+            color: var(--auth0-orange);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(235, 84, 36, 0.3);
+        }
+        
+        .content {
+            padding: 2rem;
+            background: var(--auth0-dark);
+        }
+        
+        .auth-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .auth-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--auth0-light);
+            font-weight: 600;
+        }
+        
+        .auth-section p {
+            color: var(--auth0-gray);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+        
+        .auth-section .btn {
+            align-self: center;
+            width: auto;
+            max-width: 300px;
+            display: inline-flex;
+        }
+        
+        .profile-section {
+            display: none;
+        }
+        
+        .user-card {
+            background: var(--gradient-dark);
+            color: var(--auth0-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid var(--auth0-border);
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--auth0-orange) 0%, #ff6b35 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .user-info h3 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--auth0-light);
+        }
+        
+        .user-info p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            color: var(--auth0-gray);
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+        }
+        
+        .section h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--auth0-light);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--auth0-light);
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 2px solid var(--auth0-border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: var(--auth0-light-gray);
+            color: var(--auth0-light);
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: var(--capn-blue);
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+        }
+        
+        textarea::placeholder {
+            color: var(--auth0-gray);
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            min-height: 48px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--auth0-orange) 0%, #ff6b35 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #d64920 0%, #e55a2e 100%);
+        }
+        
+        .btn-secondary {
+            background: var(--capn-blue);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #3367d6;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--auth0-light);
+            border: 2px solid var(--auth0-border);
+        }
+        
+        .btn-outline:hover {
+            background: var(--auth0-light-gray);
+            border-color: var(--capn-blue);
+        }
+        
+        .btn-danger {
+            background: var(--danger-red);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+        
+        .btn-demo {
+            background: linear-gradient(135deg, var(--warning-yellow) 0%, #dd6b20 100%);
+            color: var(--auth0-dark);
+            font-weight: 600;
+        }
+        
+        .btn-demo:hover {
+            background: linear-gradient(135deg, #d69e2e 0%, #c05621 100%);
+        }
+        
+        .status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+            border: 1px solid;
+        }
+        
+        .status.success {
+            background: rgba(72, 187, 120, 0.1);
+            color: var(--success-green);
+            border-color: rgba(72, 187, 120, 0.3);
+        }
+        
+        .status.error {
+            background: rgba(245, 101, 101, 0.1);
+            color: var(--danger-red);
+            border-color: rgba(245, 101, 101, 0.3);
+        }
+        
+        .status.info {
+            background: rgba(66, 153, 225, 0.1);
+            color: #63b3ed;
+            border-color: rgba(66, 153, 225, 0.3);
+        }
+        
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+            position: relative;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--auth0-orange);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .demo-explanation {
+            background: var(--auth0-light-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--warning-yellow);
+            border: 1px solid var(--auth0-border);
+        }
+        
+        .demo-explanation h4 {
+            margin-bottom: 0.5rem;
+            color: var(--auth0-light);
+        }
+        
+        .demo-explanation p {
+            color: var(--auth0-gray);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+        
+        .footer {
+            background: var(--auth0-darker);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--auth0-border);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--auth0-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--auth0-orange);
+        }
+        
+        .footer-note {
+            color: var(--auth0-gray);
+            font-size: 0.9rem;
+        }
+        
+        .footer-note .fas.fa-heart {
+            color: var(--danger-red);
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 0.5rem;
+                border-radius: 12px;
+            }
+            
+            .header {
+                padding: 1.5rem;
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .auth0-logo {
+                height: 32px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo">🚀 Cap'n Web</div>
+                    <img src="https://cdn.auth0.com/quantum-assets/dist/latest/logos/auth0/auth0-lockup-en-ondark.png" 
+                         alt="Auth0" 
+                         class="auth0-logo">
+                </div>
+                <p class="subtitle">Object-Capability RPC with Secure Authentication</p>
+                <span class="badge">Developer Demo</span>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="auth-section" id="authSection">
+                <h2>Welcome, Developer! 👋</h2>
+                <p>This demo showcases Cap'n Web RPC integration with Auth0 authentication. 
+                   Experience secure, real-time profile management with object-capability security.</p>
+                <button id="loginBtn" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Authenticate with Auth0
+                </button>
+            </div>
+            
+            <div class="profile-section" id="profileSection">
+                <div class="user-card">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <h3 id="userEmail">Loading...</h3>
+                        <p>Authenticated via Auth0</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>
+                        <i class="fas fa-user-edit"></i>
+                        Profile Management
+                    </h3>
+                    <div class="form-group">
+                        <label for="bioTextarea">Your Bio:</label>
+                        <textarea 
+                            id="bioTextarea" 
+                            placeholder="Tell us about yourself... (This data is stored securely via Cap'n Web RPC)"
+                            maxlength="500"
+                        ></textarea>
+                    </div>
+                </div>
+                
+                <div class="demo-explanation">
+                    <h4><i class="fas fa-info-circle"></i> RPC Pipelining Demo</h4>
+                    <p>The "Demo Pipelining" button showcases Cap'n Web's ability to execute multiple RPC calls concurrently, 
+                       demonstrating how you can save a profile and fetch the old profile data simultaneously for better performance.</p>
+                </div>
+                
+                <div class="button-grid">
+                    <button id="saveBtn" class="btn btn-secondary">
+                        <i class="fas fa-save"></i>
+                        Save Profile
+                    </button>
+                    <button id="fetchBtn" class="btn btn-outline">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh Profile
+                    </button>
+                    <button id="pipelineBtn" class="btn btn-demo">
+                        <i class="fas fa-bolt"></i>
+                        Demo Pipelining
+                    </button>
+                    <button id="logoutBtn" class="btn btn-danger">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sign Out
+                    </button>
+                </div>
+                
+                <div id="status" class="status"></div>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="https://auth0.com/docs" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                    Auth0 Documentation
+                </a>
+                <a href="https://github.com/cloudflare/capnweb" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                    Cap'n Web
+                </a>
+                <a href="https://blog.cloudflare.com/capnweb-javascript-rpc-library/" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                    Cloudflare Cap'n Web Blog Post
+                </a>
+                <a href="https://github.com/auth0/auth0-spa-js" target="_blank">
+                    <i class="fab fa-github"></i>
+                    Auth0 SPA JS SDK
+                </a>
+            </div>
+            <p class="footer-note">
+                Built with <i class="fas fa-heart" style="color: var(--danger-red);"></i> 
+                for developers exploring modern RPC patterns
+            </p>
+        </footer>
+    </div>
+
+    <!-- Auth0 SPA SDK -->
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
+    <!-- Cap'n Web browser implementation -->
+    <script src="capnweb-browser.js"></script>
+    <!-- Our client application -->
+    <script src="client.js"></script>
+</body>
+</html>

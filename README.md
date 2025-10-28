@@ -13,6 +13,7 @@ List of available quickstarts
 
 - [01 - Login](/01-Login/)
 - [02 - Calling an API](/02-Calling-an-API/)
+- [03 - Cap'n Web](/03-Capn-Web/)
 
 ## What is Auth0?
 

@@ -1,0 +1,57 @@
+{
+  "name": "capn-web-auth0-demo",
+  "version": "1.0.0",
+  "description": "Production-ready Cap'n Web RPC demo with Auth0 authentication - showcasing modern RPC patterns for developers",
+  "main": "server/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node server/index.js",
+    "start": "node server/index.js",
+    "setup": "cp .env.example .env && echo 'Please update .env with your Auth0 configuration'",
+    "cleanup": "bash scripts/cleanup.sh",
+    "test": "echo \"Add your tests here\" && exit 0",
+    "lint": "echo \"Add linting here\" && exit 0",
+    "docker:build": "docker build -t capn-web-auth0-demo .",
+    "docker:run": "docker run -p 3000:3000 --env-file .env capn-web-auth0-demo",
+    "docker:dev": "docker-compose up --build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/capn-web-auth0-demo.git"
+  },
+  "keywords": [
+    "capnweb",
+    "auth0",
+    "rpc",
+    "websocket",
+    "nodejs",
+    "javascript",
+    "authentication",
+    "real-time",
+    "demo",
+    "sample-app",
+    "developer-tools",
+    "object-capabilities",
+    "pipelining"
+  ],
+  "author": "Auth0 Community <community@auth0.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "capnweb": "^0.1.0",
+    "dotenv": "^17.2.2",
+    "@auth0/auth0-api-js": "^1.0.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/capn-web-auth0-demo/issues"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/capn-web-auth0-demo#readme"
+}

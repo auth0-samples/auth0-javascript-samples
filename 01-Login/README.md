@@ -17,7 +17,7 @@ To specify the application client ID and domain, make a copy of `auth_config.jso
 }
 ```
 
-### Installation
+### Installation2
 
 After cloning the repository, run:
 

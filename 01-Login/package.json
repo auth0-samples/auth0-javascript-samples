@@ -16,6 +16,6 @@
   "dependencies": {
     "express": "^4.18.2",
     "helmet": "^3.23.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.11.0"
   }
 }
